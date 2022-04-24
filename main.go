@@ -69,6 +69,7 @@ func returnSinglePatient(w http.ResponseWriter, r *http.Request) {
 
 	if allPatients.patientExists(key) {
 		printPatientData(w, allPatients.getPatient(key))
+		get_db_client()
 	} else {
 		fmt.Println("No patients found on Endpoint returnSinglePatient")
 	}
