@@ -2,21 +2,37 @@ package main
 
 
 type Patient struct {
+	Id                   string `bson:"Id"`
+	FirstName            string `bson:"FirstName"`
+	LastName             string `bson:"LastName"`
+	Age                  uint   `bson:"Age"`
+	Gender               string `bson:"Gender"`
+	DateOfBirth          string `bson:"DateOfBirth"`
+	HouseNumber          string `bson:"HouseNumber"`
+	StreetName           string `bson:"StreetName"`
+	CountryName          string `bson:"CountryName"`
+	PhoneNumber          uint   `bson:"PhoneNumber"`
+	ValidHealthInsurance bool   `bson:"ValidHealthInsurance"`
+	EmergencyPhoneNumber uint   `bson:"EmergencyPhoneNumber"`
+	EmergencyContactName string `bson:"EmergencyContactName"`
+	IsAdmitted           bool   `bson:"IsAdmitted"`
+}
+
+type PatientXrayData struct {
 	Id                   string
 	FirstName            string
 	LastName             string
 	Age                  uint
 	Gender               string
-	DataOfBirth          string
-	HouseNumber          string
-	StreetName           string
-	CountryName          string
-	PhoneNumber          uint
-	ValidHealthInsurance bool
-	EmergencyPhoneNumber uint
-	EmergencyContactName string
-	IsAdmmitted          bool
 	XRays                []XRay
+}
+
+type PatientBodyTemperature struct {
+	Id                   string
+	FirstName            string
+	LastName             string
+	Age                  uint
+	Gender               string
 	BodyTemperature      []BodyTemperature
 }
 

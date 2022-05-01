@@ -15,7 +15,8 @@ const mongo_uri = "mongodb+srv://master:Master_1@cluster0.sqvis.mongodb.net/?w=m
 var dbName string = "test"
 var collections string = "patient_details"
 
-func get_db_client() *mongo.Client {
+
+func getDbClient() *mongo.Client {
 	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(mongo_uri))
 	if err != nil {
 		panic(err)
@@ -29,8 +30,9 @@ func get_db_client() *mongo.Client {
 	return client
 }
 
-func get_patient_by_filter(filter bson.M) []Patient {
-	client := get_db_client()
+
+func getPatientByFilter(filter bson.M) []Patient {
+	client := getDbClient()
 	patient_collection := client.Database(dbName).Collection(collections)
 
 	var result []Patient
@@ -49,16 +51,15 @@ func get_patient_by_filter(filter bson.M) []Patient {
 	return nil
 }
 
-func get_patient_filter(firstName string, lastName string) bson.M {
-	if firstName != "" {
-		if lastName != "" {
-			return bson.M{"FirstName": firstName, "LastName": lastName}
-		} else {
-			return bson.M{"FirstName": firstName}
-		}
-	} else if lastName != "" {
-		return bson.M{"LastName": lastName}
-	} else {
-		return nil
+
+func addSinglePatient(patient Patient) {
+	client := getDbClient()
+	patient_collection := client.Database(dbName).Collection(collections)
+
+	patientBson, _ := bson.Marshal(&patient)
+	_, err := patient_collection.InsertOne(context.TODO(), patientBson)
+
+	if err != nil {
+		panic(err)
 	}
 }

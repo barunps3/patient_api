@@ -8,6 +8,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"go.mongodb.org/mongo-driver/bson"
 )
 
 var patients = []Patient{
@@ -17,29 +18,29 @@ var patients = []Patient{
 		LastName:  "Mazumdar",
 		Age:       29,
 		Gender:    "Male",
-		XRays: []XRay{
-			{
-				Date:     "19042022",
-				BodyPart: "Right Hand",
-				ImageUrl: "https://patientappdata.s3.eu-central-1.amazonaws.com/xrayData/barun-mazumdar.jpg"},
-			},
-		BodyTemperature: []BodyTemperature{
-			{
-				Date: "19042022",
-				FullDayTempReadings: []TempReading{
-					{
-						BodyTemperature: 98,
-						Unit: "Celsius",
-						Time: "0930",
-					},
-					{
-						BodyTemperature: 100,
-						Unit: "Celsius",
-						Time: "1230",
-					},
-				},
-			},
-		},
+//		XRays: []XRay{
+//			{
+//				Date:     "19042022",
+//				BodyPart: "Right Hand",
+//				ImageUrl: "https://patientappdata.s3.eu-central-1.amazonaws.com/xrayData/barun-mazumdar.jpg"},
+//			},
+//		BodyTemperature: []BodyTemperature{
+//			{
+//				Date: "19042022",
+//				FullDayTempReadings: []TempReading{
+//					{
+//						BodyTemperature: 98,
+//						Unit: "Celsius",
+//						Time: "0930",
+//					},
+//					{
+//						BodyTemperature: 100,
+//						Unit: "Celsius",
+//						Time: "1230",
+//					},
+//				},
+//			},
+//		},
 	},
 	{
 		Id:        "2",
@@ -52,47 +53,56 @@ var patients = []Patient{
 
 var allPatients = PatientsList{Patients: patients}
 
+
 func homePage(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Welcome to the Patient App")
 	fmt.Println("Endpoint Hit: homePage")
 }
 
+
 func returnAllPatients(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Endpoint Hit: returnAllPatients: List of all patients was retrieved by Barun Mazumdar")
 	
-	var firstName string = r.URL.Query().Get("firstName")
-	var lastName string =  r.URL.Query().Get("lastName")
-
-	filter := get_patient_filter(firstName, lastName)
-	var patients []Patient = get_patient_by_filter(filter)
-
+	var filterMap = bson.M{}
+	for _, param := range patientFilterParams {
+		var paramVal string = r.URL.Query().Get(param)
+		if paramVal != "" {
+			filterMap[param] = paramVal
+		}
+	}
+	var patients []Patient = getPatientByFilter(filterMap)
 	printPatientData(w, patients)
 }
+
 
 func returnSinglePatient(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Endpoint Hit: returnSinglePatient")
 	vars := mux.Vars(r)
 	key := vars["Id"]
-
-	if allPatients.patientExists(key) {
-		printPatientData(w, allPatients.getPatient(key))
+	filterMap := bson.M{"Id": key}
+	
+	var patient []Patient = getPatientByFilter(filterMap) 
+	if patient != nil {
+		printPatientData(w, patient)
 	} else {
 		fmt.Println("No patients found on Endpoint returnSinglePatient")
 	}
 }
+
 
 func createNewPatient(w http.ResponseWriter, r *http.Request) {
 	reqBody, _ := ioutil.ReadAll(r.Body)
 	var patient Patient
 	json.Unmarshal(reqBody, &patient)
 
-	if allPatients.patientExists(patient.Id) {
+	if getPatientByFilter(bson.M{"Id": patient.Id}) != nil {
 		fmt.Printf("Patient with ID: %v already exists on Endpoint createNewPatient", patient.Id)
 	} else {
-		allPatients.addPatient(patient)
+		addSinglePatient(patient)
 		json.NewEncoder(w).Encode(patient)
 	}
 }
+
 
 func patchPatient(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Endpoint Hit: patchPatient")
