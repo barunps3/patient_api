@@ -59,7 +59,14 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 
 func returnAllPatients(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Endpoint Hit: returnAllPatients: List of all patients was retrieved by Barun Mazumdar")
-	printPatientData(w, allPatients.Patients)
+	
+	var firstName string = r.URL.Query().Get("firstName")
+	var lastName string =  r.URL.Query().Get("lastName")
+
+	filter := get_patient_filter(firstName, lastName)
+	var patients []Patient = get_patient_by_filter(filter)
+
+	printPatientData(w, patients)
 }
 
 func returnSinglePatient(w http.ResponseWriter, r *http.Request) {
@@ -69,7 +76,6 @@ func returnSinglePatient(w http.ResponseWriter, r *http.Request) {
 
 	if allPatients.patientExists(key) {
 		printPatientData(w, allPatients.getPatient(key))
-		get_db_client()
 	} else {
 		fmt.Println("No patients found on Endpoint returnSinglePatient")
 	}
