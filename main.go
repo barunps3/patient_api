@@ -11,58 +11,14 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 )
 
-var patients = []Patient{
-	{
-		Id:        "1",
-		FirstName: "Barun",
-		LastName:  "Mazumdar",
-		Age:       29,
-		Gender:    "Male",
-//		XRays: []XRay{
-//			{
-//				Date:     "19042022",
-//				BodyPart: "Right Hand",
-//				ImageUrl: "https://patientappdata.s3.eu-central-1.amazonaws.com/xrayData/barun-mazumdar.jpg"},
-//			},
-//		BodyTemperature: []BodyTemperature{
-//			{
-//				Date: "19042022",
-//				FullDayTempReadings: []TempReading{
-//					{
-//						BodyTemperature: 98,
-//						Unit: "Celsius",
-//						Time: "0930",
-//					},
-//					{
-//						BodyTemperature: 100,
-//						Unit: "Celsius",
-//						Time: "1230",
-//					},
-//				},
-//			},
-//		},
-	},
-	{
-		Id:        "2",
-		FirstName: "Ume",
-		LastName:  "Hani",
-		Age:       29,
-		Gender:    "Female",
-	},
-}
-
-var allPatients = PatientsList{Patients: patients}
-
-
 func homePage(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Welcome to the Patient App")
 	fmt.Println("Endpoint Hit: homePage")
 }
 
-
 func returnAllPatients(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Endpoint Hit: returnAllPatients: List of all patients was retrieved by Barun Mazumdar")
-	
+
 	var filterMap = bson.M{}
 	for _, param := range patientFilterParams {
 		var paramVal string = r.URL.Query().Get(param)
@@ -74,21 +30,19 @@ func returnAllPatients(w http.ResponseWriter, r *http.Request) {
 	printPatientData(w, patients)
 }
 
-
 func returnSinglePatient(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Endpoint Hit: returnSinglePatient")
 	vars := mux.Vars(r)
-	key := vars["Id"]
-	filterMap := bson.M{"Id": key}
-	
-	var patient []Patient = getPatientByFilter(filterMap) 
+	patientId := vars["Id"]
+	filterMap := bson.M{"Id": patientId}
+
+	var patient []Patient = getPatientByFilter(filterMap)
 	if patient != nil {
 		printPatientData(w, patient)
 	} else {
 		fmt.Println("No patients found on Endpoint returnSinglePatient")
 	}
 }
-
 
 func createNewPatient(w http.ResponseWriter, r *http.Request) {
 	reqBody, _ := ioutil.ReadAll(r.Body)
@@ -103,21 +57,28 @@ func createNewPatient(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-
 func patchPatient(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Endpoint Hit: patchPatient")
 	vars := mux.Vars(r)
 	Id := vars["Id"]
 	reqBody, _ := ioutil.ReadAll(r.Body)
-	var key Patient
-	json.Unmarshal(reqBody, &key)
 
-	if allPatients.patientExists(Id) {
-		patientIndex := allPatients.getPatientIndex(Id)
-		//fmt.Printf("patient = %v\n", patient)
-		//fmt.Printf("key = %v\n", key)
-		//fmt.Printf("patient.FirstName = %v\n", patient.FirstName)
-		allPatients.Patients[patientIndex].FirstName = key.FirstName
+	var patchMap map[string]interface{}
+	json.Unmarshal(reqBody, &patchMap)
+
+	fmt.Printf("map[string]interface{} format patch: %v", patchMap)
+
+	update := bson.D{}
+	for k, v := range patchMap {
+		fmt.Printf("type of value: %T", v)
+		update = append(update, bson.E{k, v})
+	}
+
+	var filter = bson.M{"Id": Id}
+
+	updatedPatient := updateOnePatientByFilter(filter, update)
+	if updatedPatient != nil {
+		printPatientData(w, updatedPatient)
 	} else {
 		fmt.Println("No patients found to patch")
 	}
@@ -126,16 +87,33 @@ func patchPatient(w http.ResponseWriter, r *http.Request) {
 func deletePatient(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Endpoint Hit: deletePatient")
 	vars := mux.Vars(r)
-	id := vars["Id"]
+	patientId := vars["Id"]
+	fmt.Printf(patientId)
+	filterMap := bson.M{"Id": patientId}
 
-	if allPatients.patientExists(id) {
-		allPatients.deletePatient(id)
+	var patients []Patient = getPatientByFilter(filterMap)
+	if patients != nil {
+		deleteOnePatientByFilter(filterMap)
 	} else {
 		fmt.Println("Endpoint Hit: Patient does not exist.")
 	}
 }
 
-func handleRequests() {
+func getPatientXrays(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Endpoint Hit: getPatientXrays")
+	vars := mux.Vars(r)
+	patientId := vars["Id"]
+	filterMap := bson.M{"Id": patientId}
+
+	var xrays []PatientXrayData = getPatientXraysByFilter(filterMap)
+	if xrays != nil {
+		printPatientData(w, xrays)
+	} else {
+		fmt.Println("No Xray found on Endpoint getPatientXrays")
+	}
+}
+
+func main() {
 	myRouter := mux.NewRouter().StrictSlash(true)
 
 	myRouter.HandleFunc("/", homePage)
@@ -145,9 +123,7 @@ func handleRequests() {
 	myRouter.HandleFunc("/patient/{Id}", patchPatient).Methods("PATCH")
 	myRouter.HandleFunc("/patient", createNewPatient).Methods("POST")
 
-	log.Fatal(http.ListenAndServe(":8080", myRouter))
-}
+	myRouter.HandleFunc("/xrays/{Id}", getPatientXrays).Methods("GET")
 
-func main() {
-	handleRequests()
+	log.Fatal(http.ListenAndServe(":8080", myRouter))
 }
