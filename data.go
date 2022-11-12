@@ -17,10 +17,6 @@ type Patient struct {
 	IsAdmitted           bool   `bson:"IsAdmitted"`
 }
 
-type PatientsList struct {
-	Patients []Patient
-}
-
 type XRay struct {
 	Date     string
 	BodyPart string
