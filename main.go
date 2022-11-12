@@ -3,7 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"log"
 	"net/http"
 
@@ -45,7 +45,7 @@ func returnSinglePatient(w http.ResponseWriter, r *http.Request) {
 }
 
 func createNewPatient(w http.ResponseWriter, r *http.Request) {
-	reqBody, _ := ioutil.ReadAll(r.Body)
+	reqBody, _ := io.ReadAll(r.Body)
 	var patient Patient
 	json.Unmarshal(reqBody, &patient)
 
@@ -61,7 +61,7 @@ func patchPatient(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Endpoint Hit: patchPatient")
 	vars := mux.Vars(r)
 	Id := vars["Id"]
-	reqBody, _ := ioutil.ReadAll(r.Body)
+	reqBody, _ := io.ReadAll(r.Body)
 
 	var patchMap map[string]interface{}
 	json.Unmarshal(reqBody, &patchMap)
@@ -88,7 +88,7 @@ func deletePatient(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Endpoint Hit: deletePatient")
 	vars := mux.Vars(r)
 	patientId := vars["Id"]
-	fmt.Printf(patientId)
+	fmt.Print(patientId)
 	filterMap := bson.M{"Id": patientId}
 
 	var patients []Patient = getPatientByFilter(filterMap)
