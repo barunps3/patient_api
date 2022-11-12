@@ -1,1 +1,31 @@
-<mxfile host="app.diagrams.net" modified="2022-05-01T19:53:22.322Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.3 Safari/605.1.15" etag="s_iDIH7JNzfDCCTPCpFF" version="17.5.0" type="device"><diagram id="2Bb33UaujHxbdKAuJku1" name="Page-1">1VfbcpswEP0aZtqHznCxcfLoe9PGaabOtH0VIIMmAhEhgt2vr2TEVZCaiV1PX2xxtLvSHu0ehGbNw/2agjjYEA9izdS9vWYtNNO8Hdn8VwCHHBjboxzwKfJyyKiALfoNJahLNEUeTBqGjBDMUNwEXRJF0GUNDFBKsqbZjuDmqjHwoQJsXYBV9CfyWJCjN+akwj9D5AfFyoZ9m8+EoDCWmSQB8EhWg6ylZs0pISwfhfs5xIK7gpfcb9UzW26Mwoid4rBx/a/WDwc/Jh7WH8iXDK+TTzLKK8CpTHhDIp9waDGT22aHggueQSyG7gGjyIPU0qxZFiAGtzFwxUTGS4BjAQsxfzL40CEpt/TunRIA7rNPBfotZTwMlHiSn7wx5mO5J0gZ3Pcma5QU8tKDJISMHriJdBiNJeuy7Mp6yqpDNAqboH6AEwkCWTh+Gbvilg8kvQOoNhWqp493Csc0J4w/6H9nV1CEeK1OMfIjjjESn4m+Jnu2Sp5500GefXsp8sYKeevlEwd+USC2vQAMvEGlMZxKhzBGwvOwOWmyaZkddJr/tBZthU7NtDFfduah1waL9ksqBGrWGPnif4Uwg1SzpoUr38nRO58eHvA7fEkRFQcmQoJQnFDkJHEt2HuXKDwIbiMYFcjdorZaBauGK0QT9gBCeKL9PSjN+5J7y33qD/PkoJpmm8BWy/AaZ82+SBglz3BOMOFHvYiIEOzZDmHcgoDsGwx3rKOdQuR5YpHONmxq3hkaztDHzY4bnar+xqU6btLRcS3yxWsx7s1eXnCAU5jr75QhQ7+6DFk9qh4DhkRSSrlfT+H7D1Xl+3qEjhRC6yrdqR0OvbQ48lT0mvadrHX6B59CIHZ/DIFhkojbfwCijyeGWUNxTR2ikv+rHg4pTxnFbMuBKpFddzzDGl68/LH6zjnO1T4WreUf</diagram></mxfile>
+<mxfile host="65bd71144e">
+    <diagram id="2Bb33UaujHxbdKAuJku1" name="Page-1">
+        <mxGraphModel dx="681" dy="570" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="McgK3VblPsdl0NoJwlGs-1" value="Mongo DB" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" parent="1" vertex="1">
+                    <mxGeometry x="450" y="210" width="150" height="170" as="geometry"/>
+                </mxCell>
+                <mxCell id="McgK3VblPsdl0NoJwlGs-2" value="API" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="60" width="280" height="460" as="geometry"/>
+                </mxCell>
+                <mxCell id="McgK3VblPsdl0NoJwlGs-5" value="GET Xray Data" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=bottom;" parent="1" vertex="1">
+                    <mxGeometry x="70" y="320" width="220" height="170" as="geometry"/>
+                </mxCell>
+                <mxCell id="McgK3VblPsdl0NoJwlGs-6" value="&lt;div style=&quot;&quot;&gt;Filter:&lt;/div&gt;&lt;div style=&quot;&quot;&gt;Required:&amp;nbsp;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;ol&gt;&lt;li&gt;ID&lt;/li&gt;&lt;li&gt;FirstName&lt;/li&gt;&lt;li&gt;LastName&amp;nbsp;&lt;/li&gt;&lt;li&gt;Age&amp;nbsp;&lt;/li&gt;&lt;/ol&gt;&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="105" y="340" width="150" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="McgK3VblPsdl0NoJwlGs-7" value="" style="group" parent="1" vertex="1" connectable="0">
+                    <mxGeometry x="70" y="100" width="220" height="170" as="geometry"/>
+                </mxCell>
+                <mxCell id="McgK3VblPsdl0NoJwlGs-3" value="GET patient&amp;nbsp;" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=bottom;" parent="McgK3VblPsdl0NoJwlGs-7" vertex="1">
+                    <mxGeometry width="220" height="170" as="geometry"/>
+                </mxCell>
+                <mxCell id="McgK3VblPsdl0NoJwlGs-4" value="Filter:&amp;nbsp;&lt;br&gt;&lt;ol&gt;&lt;li&gt;ID&lt;/li&gt;&lt;li&gt;FirstName, LastName&lt;/li&gt;&lt;li&gt;Age (greater, less than)&lt;/li&gt;&lt;li&gt;Gender&lt;/li&gt;&lt;/ol&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="McgK3VblPsdl0NoJwlGs-7" vertex="1">
+                    <mxGeometry x="20" y="10" width="180" height="130" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

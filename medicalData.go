@@ -1,25 +1,32 @@
 package main
 
-
 type XRay struct {
-	Date string
+	Date     string
 	BodyPart string
 	ImageUrl string
 }
 
 type CTScan struct {
-	Date string
+	Date     string
 	BodyPart string
 	ImageUrl string
 }
 
 type TempReading struct {
 	BodyTemperature float32
-	Unit string
-	Time string
+	Unit            string
+	Time            string
 }
 
 type BodyTemperature struct {
-	Date string
+	Date                string
 	FullDayTempReadings []TempReading
+}
+
+type MedicalAppointment struct {
+	Id          string
+	IsBooked    bool
+	BookingDate string
+	Date        string
+	Time        string
 }

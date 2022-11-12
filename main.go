@@ -71,7 +71,7 @@ func patchPatient(w http.ResponseWriter, r *http.Request) {
 	update := bson.D{}
 	for k, v := range patchMap {
 		fmt.Printf("type of value: %T", v)
-    update = append(update, bson.E{Key: k, Value: v})
+		update = append(update, bson.E{Key: k, Value: v})
 	}
 
 	var filter = bson.M{"Id": Id}

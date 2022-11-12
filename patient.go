@@ -1,5 +1,11 @@
 package main
 
+import (
+	"context"
+	"fmt"
+
+	"go.mongodb.org/mongo-driver/bson"
+)
 
 type Patient struct {
 	Id                   string `bson:"Id"`
@@ -19,63 +25,105 @@ type Patient struct {
 }
 
 type PatientXrayData struct {
-	Id                   string
-	FirstName            string
-	LastName             string
-	Age                  uint
-	Gender               string
-	XRays                []XRay
+	Id        string
+	FirstName string
+	LastName  string
+	Age       uint
+	Gender    string
+	XRays     []XRay
 }
 
 type PatientBodyTemperature struct {
-	Id                   string
-	FirstName            string
-	LastName             string
-	Age                  uint
-	Gender               string
-	BodyTemperature      []BodyTemperature
+	Id              string
+	FirstName       string
+	LastName        string
+	Age             uint
+	Gender          string
+	BodyTemperature []BodyTemperature
 }
 
 type PatientsList struct {
 	Patients []Patient
 }
 
+func getPatientByFilter(filter bson.M) []Patient {
+	client := getDbClient()
+	patientCollection := client.Database(dbName).Collection(patientDetails)
 
-func (patients PatientsList) getPatient(id string) *Patient {
-	for _, patient := range patients.Patients {
-		if patient.Id == id {
-			return &patient
+	var result []Patient
+
+	if filter != nil {
+		cursor, err := patientCollection.Find(context.TODO(), filter)
+		if err != nil {
+			panic(err)
 		}
+		err = cursor.All(context.TODO(), &result)
+		if err != nil {
+			panic(err)
+		}
+		return result
 	}
 	return nil
 }
 
-func (patients PatientsList) getPatientIndex(id string) int {
-	for index, patient := range patients.Patients {
-		if patient.Id == id {
-			return index
+func addSinglePatient(patient Patient) {
+	client := getDbClient()
+	patientCollection := client.Database(dbName).Collection(patientDetails)
+
+	patientBson, _ := bson.Marshal(&patient)
+	_, err := patientCollection.InsertOne(context.TODO(), patientBson)
+
+	if err != nil {
+		panic(err)
+	}
+}
+
+func deleteOnePatientByFilter(filter bson.M) {
+	client := getDbClient()
+	patientCollection := client.Database(dbName).Collection(patientDetails)
+
+	if filter != nil {
+		result, err := patientCollection.DeleteOne(context.TODO(), filter)
+		fmt.Printf("result delete: %v", result)
+		if err != nil {
+			panic(err)
 		}
 	}
-	return -1
 }
 
-func (patients PatientsList) patientExists(id string) bool {
-	if patients.getPatient(id) == nil {
-		return false
-	} else {
-		return true
+func updateOnePatientByFilter(filter bson.M, update bson.D) []Patient {
+	client := getDbClient()
+	patientCollection := client.Database(dbName).Collection(patientDetails)
+
+	update = bson.D{{Key: "$set", Value: update}}
+	updateResult, err := patientCollection.UpdateOne(context.TODO(), filter, update)
+	if err != nil {
+		panic(err)
 	}
+
+	if updateResult.MatchedCount == 1 && updateResult.ModifiedCount == 1 {
+		return getPatientByFilter(filter)
+	}
+
+	return nil
 }
 
+func getPatientXraysByFilter(filter bson.M) []PatientXrayData {
+	client := getDbClient()
+	xraysCollection := client.Database(dbName).Collection(patientXrays)
 
-func (patients *PatientsList) addPatient(patient Patient) {
-	patients.Patients = append(patients.Patients, patient)
+	var result []PatientXrayData
+
+	if filter != nil {
+		cursor, err := xraysCollection.Find(context.TODO(), filter)
+		if err != nil {
+			panic(err)
+		}
+		err = cursor.All(context.TODO(), &result)
+		if err != nil {
+			panic(err)
+		}
+		return result
+	}
+	return nil
 }
-
-
-func (patients *PatientsList) deletePatient(id string) {
-	index := patients.getPatientIndex(id)
-	patients.Patients = append(patients.Patients[:index], patients.Patients[index+1:]...)	
-}
-
-
