@@ -105,7 +105,7 @@ func getPatientXrays(w http.ResponseWriter, r *http.Request) {
 	patientId := vars["Id"]
 	filterMap := bson.M{"Id": patientId}
 
-	var xrays []PatientXrayData = getPatientXraysByFilter(filterMap)
+	var xrays []PatientXrays = getPatientXraysByFilter(filterMap)
 	if xrays != nil {
 		printPatientData(w, xrays)
 	} else {

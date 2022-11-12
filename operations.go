@@ -7,45 +7,6 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 )
 
-type Patient struct {
-	Id                   string `bson:"Id"`
-	FirstName            string `bson:"FirstName"`
-	LastName             string `bson:"LastName"`
-	Age                  uint   `bson:"Age"`
-	Gender               string `bson:"Gender"`
-	DateOfBirth          string `bson:"DateOfBirth"`
-	HouseNumber          string `bson:"HouseNumber"`
-	StreetName           string `bson:"StreetName"`
-	CountryName          string `bson:"CountryName"`
-	PhoneNumber          uint   `bson:"PhoneNumber"`
-	ValidHealthInsurance bool   `bson:"ValidHealthInsurance"`
-	EmergencyPhoneNumber uint   `bson:"EmergencyPhoneNumber"`
-	EmergencyContactName string `bson:"EmergencyContactName"`
-	IsAdmitted           bool   `bson:"IsAdmitted"`
-}
-
-type PatientXrayData struct {
-	Id        string
-	FirstName string
-	LastName  string
-	Age       uint
-	Gender    string
-	XRays     []XRay
-}
-
-type PatientBodyTemperature struct {
-	Id              string
-	FirstName       string
-	LastName        string
-	Age             uint
-	Gender          string
-	BodyTemperature []BodyTemperature
-}
-
-type PatientsList struct {
-	Patients []Patient
-}
-
 func getPatientByFilter(filter bson.M) []Patient {
 	client := getDbClient()
 	patientCollection := client.Database(dbName).Collection(patientDetails)
@@ -108,14 +69,53 @@ func updateOnePatientByFilter(filter bson.M, update bson.D) []Patient {
 	return nil
 }
 
-func getPatientXraysByFilter(filter bson.M) []PatientXrayData {
+func getPatientXraysByFilter(filter bson.M) []PatientXrays {
 	client := getDbClient()
 	xraysCollection := client.Database(dbName).Collection(patientXrays)
 
-	var result []PatientXrayData
+	var result []PatientXrays
 
 	if filter != nil {
 		cursor, err := xraysCollection.Find(context.TODO(), filter)
+		if err != nil {
+			panic(err)
+		}
+		err = cursor.All(context.TODO(), &result)
+		if err != nil {
+			panic(err)
+		}
+		return result
+	}
+	return nil
+}
+
+func getPatientCTScanByFilter(filter bson.M) []PatientCTScans {
+	client := getDbClient()
+	ctScansCollection := client.Database(dbName).Collection(patientCTScans)
+
+	var result []PatientCTScans
+
+	if filter != nil {
+		cursor, err := ctScansCollection.Find(context.TODO(), filter)
+		if err != nil {
+			panic(err)
+		}
+		err = cursor.All(context.TODO(), &result)
+		if err != nil {
+			panic(err)
+		}
+		return result
+	}
+	return nil
+}
+
+func getPatientAppointmentsByFilter(filter bson.M) []PatientMedicalAppointments {
+	client := getDbClient()
+	appointmentCollection := client.Database(dbName).Collection(patientAppointments)
+	var result []PatientMedicalAppointments
+
+	if filter != nil {
+		cursor, err := appointmentCollection.Find(context.TODO(), filter)
 		if err != nil {
 			panic(err)
 		}

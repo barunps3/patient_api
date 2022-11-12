@@ -1,4 +1,4 @@
-module patient-app
+module patient_app
 
 go 1.19
 
