@@ -84,7 +84,7 @@ func updateOnePatientByFilter(filter bson.M, update bson.D) []Patient {
 	client := getDbClient()
 	patientCollection := client.Database(dbName).Collection(patientDetails)
 
-	update = bson.D{{"$set", update}}
+  update = bson.D{{Key: "$set", Value: update}}
 	updateResult, err := patientCollection.UpdateOne(context.TODO(), filter, update)
 	if err != nil {
 		panic(err)
