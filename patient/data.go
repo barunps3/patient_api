@@ -73,7 +73,7 @@ type MedicalAppointment struct {
 	Time        string
 }
 
-type PatientMedicalAppointments struct {
+type MedicalAppointments struct {
 	Id                 string
 	FirstName          string
 	LastName           string

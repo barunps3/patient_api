@@ -109,10 +109,10 @@ func GetCTScanByFilter(filter bson.M) []PatientCTScans {
 	return nil
 }
 
-func GetAppointmentsByFilter(filter bson.M) []PatientMedicalAppointments {
+func GetAppointmentsByFilter(filter bson.M) []MedicalAppointments {
 	client := getDbClient()
 	appointmentCollection := client.Database(dbName).Collection(patientAppointments)
-	var result []PatientMedicalAppointments
+	var result []MedicalAppointments
 
 	if filter != nil {
 		cursor, err := appointmentCollection.Find(context.TODO(), filter)
