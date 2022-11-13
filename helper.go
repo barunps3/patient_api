@@ -2,8 +2,9 @@ package main
 
 import (
 	"encoding/json"
-	"io"
 	"fmt"
+	"io"
+	"medicalApp/patient"
 )
 
 func printPatientData(writeOutput io.Writer, patients any) {
@@ -12,7 +13,7 @@ func printPatientData(writeOutput io.Writer, patients any) {
 	enc.Encode(patients)
 }
 
-func writeJson(writeOutput io.Writer, patient Patient) {
+func writeJson(writeOutput io.Writer, patient patient.Patient) {
 	fmt.Println(patient)
 	fmt.Println("Using write json")
 	b, _ := json.MarshalIndent(patient, "", "\t")

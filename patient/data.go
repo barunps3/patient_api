@@ -1,6 +1,6 @@
-package main
+package patient
 
-type Patient struct {
+type Identity struct {
 	Id                   string `bson:"Id"`
 	FirstName            string `bson:"FirstName"`
 	LastName             string `bson:"LastName"`
@@ -23,7 +23,7 @@ type XRay struct {
 	ImageUrl string
 }
 
-type PatientXrays struct {
+type XRays struct {
 	Id        string
 	FirstName string
 	LastName  string

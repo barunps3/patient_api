@@ -1,4 +1,4 @@
-package main
+package patient
 
 import (
 	"context"
@@ -7,11 +7,11 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 )
 
-func getPatientByFilter(filter bson.M) []Patient {
+func GetByFilter(filter bson.M) []Identity {
 	client := getDbClient()
 	patientCollection := client.Database(dbName).Collection(patientDetails)
 
-	var result []Patient
+	var result []Identity
 
 	if filter != nil {
 		cursor, err := patientCollection.Find(context.TODO(), filter)
@@ -27,7 +27,7 @@ func getPatientByFilter(filter bson.M) []Patient {
 	return nil
 }
 
-func addSinglePatient(patient Patient) {
+func AddOne(patient Identity) {
 	client := getDbClient()
 	patientCollection := client.Database(dbName).Collection(patientDetails)
 
@@ -39,7 +39,7 @@ func addSinglePatient(patient Patient) {
 	}
 }
 
-func deleteOnePatientByFilter(filter bson.M) {
+func DeleteOneByFilter(filter bson.M) {
 	client := getDbClient()
 	patientCollection := client.Database(dbName).Collection(patientDetails)
 
@@ -52,7 +52,7 @@ func deleteOnePatientByFilter(filter bson.M) {
 	}
 }
 
-func updateOnePatientByFilter(filter bson.M, update bson.D) []Patient {
+func UpdateOneByFilter(filter bson.M, update bson.D) []Identity {
 	client := getDbClient()
 	patientCollection := client.Database(dbName).Collection(patientDetails)
 
@@ -63,17 +63,17 @@ func updateOnePatientByFilter(filter bson.M, update bson.D) []Patient {
 	}
 
 	if updateResult.MatchedCount == 1 && updateResult.ModifiedCount == 1 {
-		return getPatientByFilter(filter)
+		return GetByFilter(filter)
 	}
 
 	return nil
 }
 
-func getPatientXraysByFilter(filter bson.M) []PatientXrays {
+func GetXraysByFilter(filter bson.M) []XRays {
 	client := getDbClient()
-	xraysCollection := client.Database(dbName).Collection(patientXrays)
+	xraysCollection := client.Database(dbName).Collection(patient_xrays)
 
-	var result []PatientXrays
+	var result []XRays
 
 	if filter != nil {
 		cursor, err := xraysCollection.Find(context.TODO(), filter)
@@ -89,7 +89,7 @@ func getPatientXraysByFilter(filter bson.M) []PatientXrays {
 	return nil
 }
 
-func getPatientCTScanByFilter(filter bson.M) []PatientCTScans {
+func GetCTScanByFilter(filter bson.M) []PatientCTScans {
 	client := getDbClient()
 	ctScansCollection := client.Database(dbName).Collection(patientCTScans)
 
@@ -109,7 +109,7 @@ func getPatientCTScanByFilter(filter bson.M) []PatientCTScans {
 	return nil
 }
 
-func getPatientAppointmentsByFilter(filter bson.M) []PatientMedicalAppointments {
+func GetAppointmentsByFilter(filter bson.M) []PatientMedicalAppointments {
 	client := getDbClient()
 	appointmentCollection := client.Database(dbName).Collection(patientAppointments)
 	var result []PatientMedicalAppointments

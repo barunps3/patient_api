@@ -1,4 +1,4 @@
-package main
+package patient
 
 import (
 	"context"
@@ -13,7 +13,7 @@ const mongo_uri = "mongodb+srv://master:Master_1@cluster0.sqvis.mongodb.net/?w=m
 
 const dbName string = "test"
 const patientDetails string = "patient_details"
-const patientXrays string = "patient_xrays"
+const patient_xrays string = "patient_xrays"
 const patientCTScans string = "patient_ctscans"
 const patientAppointments string = "patient_appointments"
 
