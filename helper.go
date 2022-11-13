@@ -13,7 +13,7 @@ func printPatientData(writeOutput io.Writer, patients any) {
 	enc.Encode(patients)
 }
 
-func writeJson(writeOutput io.Writer, patient patient.Patient) {
+func writeJson(writeOutput io.Writer, patient patient.Identity) {
 	fmt.Println(patient)
 	fmt.Println("Using write json")
 	b, _ := json.MarshalIndent(patient, "", "\t")
