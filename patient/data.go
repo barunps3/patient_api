@@ -3,6 +3,7 @@ package patient
 type Identity struct {
 	Id                   string `bson:"Id"`
 	FirstName            string `bson:"FirstName"`
+	MiddleName           string `bson:"MiddleName"`
 	LastName             string `bson:"LastName"`
 	Age                  uint   `bson:"Age"`
 	Gender               string `bson:"Gender"`
@@ -15,6 +16,12 @@ type Identity struct {
 	EmergencyPhoneNumber uint   `bson:"EmergencyPhoneNumber"`
 	EmergencyContactName string `bson:"EmergencyContactName"`
 	IsAdmitted           bool   `bson:"IsAdmitted"`
+	CreationDateTime     string `bson:"CreationDateTime"`
+}
+
+type MetaInfo struct {
+	Id               string `bson:"Id"`
+	CreationDateTime string `bson:"DateOfEntry"`
 }
 
 type XRay struct {

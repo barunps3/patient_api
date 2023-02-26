@@ -2,7 +2,11 @@ package patient
 
 import (
 	"context"
+	"crypto/md5"
 	"fmt"
+	"strings"
+
+	"encoding/hex"
 
 	"go.mongodb.org/mongo-driver/bson"
 )
@@ -27,16 +31,57 @@ func GetByFilter(filter bson.M) []Identity {
 	return nil
 }
 
-func AddOne(patient Identity) {
+func CreateOneIdentity(patient *Identity) {
+	patient.CreationDateTime = "14.11.2022-14:19:00"
+	patient.Id = generatePatientId(patient)
+	patient.Age = getPatientAge(patient)
+
+	generatePatientDocument(patient)
+	generateRelatedRegisters(patient)
+}
+
+func generatePatientId(patient *Identity) string {
+	var input_string string = strings.Join([]string{patient.FirstName,
+		patient.LastName, patient.DateOfBirth, patient.CreationDateTime}, "")
+	var id_bytes [16]byte = md5.Sum([]byte(input_string))
+	return hex.EncodeToString(id_bytes[:])
+}
+
+func getPatientAge(patient *Identity) uint
+
+func generatePatientDocument(patient *Identity) {
 	client := getDbClient()
 	patientCollection := client.Database(dbName).Collection(patientDetails)
 
-	patientBson, _ := bson.Marshal(&patient)
+	patientBson, _ := bson.Marshal(patient)
 	_, err := patientCollection.InsertOne(context.TODO(), patientBson)
 
 	if err != nil {
 		panic(err)
 	}
+}
+
+func generateRelatedRegisters(patient *Identity) {
+	createMetaInfo(patient)
+	createEmptyAppointmentRegister(patient)
+	createEmptyCTScanRegister(patient)
+	createEmptyXRayRegister(patient)
+}
+
+func createEmptyXRayRegister(identity *Identity) {
+
+}
+
+func createEmptyCTScanRegister(identity *Identity) {
+
+}
+
+func createEmptyAppointmentRegister(identity *Identity) {
+
+}
+
+func createMetaInfo(identiy *Identity) {
+
 }
 
 func DeleteOneByFilter(filter bson.M) {

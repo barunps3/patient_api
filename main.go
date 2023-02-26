@@ -54,7 +54,8 @@ func createNewPatient(w http.ResponseWriter, r *http.Request) {
 	if patient.GetByFilter(bson.M{"Id": patientInfo.Id}) != nil {
 		fmt.Printf("Patient with ID: %v already exists on Endpoint createNewPatient", patientInfo.Id)
 	} else {
-		patient.AddOne(patientInfo)
+		// TODO: Validate before insertion
+		patient.CreateOneIdentity(&patientInfo)
 		json.NewEncoder(w).Encode(patientInfo)
 	}
 }
