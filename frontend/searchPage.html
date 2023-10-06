@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Search Patients</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/basicStyle.css">
+    <link rel="stylesheet" href="styles/searchPage.css">
+  </head>
+
+  <body>
+
+    <section class="header">
+      <div class="nav-bar dark-blue">
+        <div>
+          <img class="company-icon" src="./icons/ehr.png" alt="ehr icon">
+        </div>
+        <div>
+          <h3 class="company-name">Baum Electronic Health Records</h3>
+        </div>
+      </div>
+      <div class="nav-bar light-blue"></div>
+    </section>
+
+    <div class="flex-container">
+      <form action="https://www.google.com" method="GET">
+        <div class="input-group">
+            <label for="patient_id">Patient ID</label>
+            <input type="search" id="patient_id" name="Patient ID" placeholder="Aadhar Card/Passport/Patient ID" required>
+        </div>
+        <button type="search">Search</button>
+      </form>
+
+      <searchResults>
+        <div id="results-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Gender</th>
+                <th>Date of birth</th>
+                <th>ID Type</th>
+                <th>ID value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Ume Hani</td>
+                <td>Female</td>
+                <td>11/03/1993</td>
+                <td>Aadhar Card</td>
+                <td>ZKUP38U</td>
+              </tr>
+              <tr>
+                <td>Barun Mazumdar</td>
+                <td>Male</td>
+                <td>14/10/1992</td>
+                <td>Aadhar Card</td>
+                <td>ZKUP38U</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </searchResults>
+    </div>
+
+    <footer>
+      <div class="light-blue"></div>
+      <div class="footer dark-blue"></div>
+    </footer>
+
+  </body>
+
+</html>
