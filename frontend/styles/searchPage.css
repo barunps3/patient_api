@@ -34,6 +34,8 @@ input {
 
 
 button {
+  margin-top: 10px;
+  margin-right: 5px;
   background-color: #4F709C;
   width: 80px;
   color: #fff;
@@ -44,11 +46,13 @@ button {
   transition: background-color 0.3s ease;
 }
 
-
 button:hover {
   background-color: #0056b3;
 }
 
+#add-patient {
+  width: 140px;
+}
 
 .result-item {
   border: 1px solid #ccc;

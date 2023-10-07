@@ -10,8 +10,9 @@
 
   <body>
 
-    <section class="header">
-      <div class="nav-bar dark-blue">
+    <!-- Company Header -->
+    <header>
+      <div class="company-header dark-blue">
         <div>
           <img class="company-icon" src="./icons/ehr.png" alt="ehr icon">
         </div>
@@ -19,17 +20,21 @@
           <h3 class="company-name">Baum Electronic Health Records</h3>
         </div>
       </div>
-      <div class="nav-bar light-blue"></div>
-    </section>
+      <div class="company-header light-blue"></div>
+    </header>
 
+    <!-- Search Form with Results -->
     <div class="flex-container">
       <form action="https://www.google.com" method="GET">
         <div class="input-group">
             <label for="patient_id">Patient ID</label>
             <input type="search" id="patient_id" name="Patient ID" placeholder="Aadhar Card/Passport/Patient ID" required>
         </div>
-        <button type="search">Search</button>
       </form>
+      <div>
+        <button id=search type="submit">Search</button>
+        <button id=add-patient type="button">+ Add new patient</button>
+      </div>
 
       <searchResults>
         <div id="results-container">

@@ -9,7 +9,7 @@ body {
   align-items: center;
 }
 
-.nav-bar {
+.company-header {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -18,7 +18,7 @@ body {
 
 .dark-blue {
   background-color: #213555;
-  height: 80px;
+  height: 50px;
   width: 100vw;
 }
 
@@ -39,6 +39,6 @@ body {
 }
 
 footer {
-  height: 90px;
+  height: 60px;
   width: 100vw;
 }
