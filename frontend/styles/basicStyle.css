@@ -11,6 +11,7 @@ body {
 
 .company-header {
   display: flex;
+  position: sticky;
   align-items: center;
   justify-content: center;
   gap: 10px;
@@ -36,6 +37,13 @@ body {
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif, Times, serif;
   font-size: 1.5rem;
   color: white
+}
+
+main-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
 }
 
 footer {
