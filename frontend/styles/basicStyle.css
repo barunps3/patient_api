@@ -1,17 +1,26 @@
+:root {
+  --header-height: 60px;
+  --dark-blue-height: 50px;
+  --light-blue-height: 10px;
+  --side-bar-width: 20vw;
+  --side-bar-height: 100%;
+}
 
 body {
   margin: 0;
   padding: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   min-height: 100vh;
-  align-items: center;
+  width: 100vw;
+}
+
+header {
+  position: fixed;
+  top: 0px;
+  z-index: 1;
 }
 
 .company-header {
   display: flex;
-  position: sticky;
   align-items: center;
   justify-content: center;
   gap: 10px;
@@ -19,13 +28,13 @@ body {
 
 .dark-blue {
   background-color: #213555;
-  height: 50px;
+  height: var(--dark-blue-height);
   width: 100vw;
 }
 
 .light-blue {
   background-color: #4F709C;
-  height: 10px;
+  height: var(--light-blue-height);
 }
 
 .company-icon {
@@ -40,13 +49,17 @@ body {
 }
 
 main-content {
-  flex-grow: 1;
+  position: relative;
+  top: var(--header-height);
+  min-height: calc(100vh - 2 * var(--header-height));
   display: flex;
   flex-direction: column;
-  width: 100vw;
+  width: 100%;
 }
 
 footer {
+  position: relative;
+  top: var(--header-height);
   height: 60px;
-  width: 100vw;
+  width: 100%;
 }
