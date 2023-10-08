@@ -2,8 +2,10 @@
   --header-height: 60px;
   --dark-blue-height: 50px;
   --light-blue-height: 10px;
-  --side-bar-width: 20vw;
-  --side-bar-height: 100%;
+  --header-color-1: #213555;
+  --header-color-2: #4F709C;
+  --content-color-1: #D8C4B6;
+  --content-color-2: #F5EFE7;
 }
 
 body {
@@ -27,13 +29,13 @@ header {
 }
 
 .dark-blue {
-  background-color: #213555;
+  background-color: var(--header-color-1);
   height: var(--dark-blue-height);
   width: 100vw;
 }
 
 .light-blue {
-  background-color: #4F709C;
+  background-color: var(--header-color-2);
   height: var(--light-blue-height);
 }
 

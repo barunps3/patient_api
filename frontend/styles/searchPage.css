@@ -34,7 +34,7 @@ input {
 button {
   margin-top: 10px;
   margin-right: 5px;
-  background-color: #4F709C;
+  background-color: var(--header-color-2);
   width: 80px;
   color: #fff;
   border: none;
@@ -81,7 +81,7 @@ th, td {
 }
 
 th {
-  background-color: #D8C4B6;
+  background-color: var(--content-color-1);
 }
 
 tr:hover {
