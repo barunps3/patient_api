@@ -26,22 +26,17 @@
     <!-- Search Form with Results -->
     <main-content>
       <div class="flex-container">
-        <form action="https://www.google.com" method="GET">
-          <div>
-              <label for="patient_id">Patient ID</label>
-              <div class="search-input">
-                <div class="dropdown" data-dropdown>
-                  <button class="id-selector-btn" data-dropdown-button>ID Type</button>
-                  <div class="dropdown-menu">
-                    <div>Aadhar Card</div>
-                    <div>Passport</div>
-                    <div>Patient ID</div>
-                  </div>
-                </div>
-                <input type="search" id="patient_id" name="Patient ID" placeholder="Aadhar Card/Passport/Patient ID" required />
-              </div>
+        <div class="search-input">
+          <div class="dropdown" data-dropdown>
+            <button class="id-selector-btn" data-dropdown-button>ID Type</button>
+            <div class="dropdown-menu id-menu">
+              <div class="id-type">Aadhar Card</div>
+              <div class="id-type">Passport</div>
+              <div class="id-type">Patient ID</div>
+            </div>
           </div>
-        </form>
+          <input type="search" id="patient_id" name="Patient ID" placeholder="Select the ID type" required />
+        </div>
         <div>
           <button class="link" id=search type="submit">Search</button>
           <button class="link" id=add-patient type="button">+ Add new patient</button>
