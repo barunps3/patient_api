@@ -30,8 +30,7 @@ input {
   border-radius: 10px;
 }
 
-
-button {
+button.link {
   margin-top: 10px;
   margin-right: 5px;
   background-color: var(--header-color-2);
@@ -44,8 +43,45 @@ button {
   transition: background-color 0.3s ease;
 }
 
-button:hover {
+button.link:hover {
   background-color: #0056b3;
+}
+
+.search-input > * {
+  display: inline-block;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.id-selector-btn {
+  border: solid;
+  border-color: blue;
+  background-color: red;
+  margin: 0px;
+}
+
+.dropdown-menu {
+  position: absolute;
+  background-color: white;
+  opacity: 0;
+  border: solid;
+  border-color: red;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
+  top: calc(100% + 0.25rem);
+  transform: translateY(-20px);
+  pointer-events: none;
+  transition: opacity 150ms ease-in-out;
+  transition: transform 150ms ease-in-out;
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown.active > .link + .dropdown-menu {
+  transform: translateY(0px);
+  pointer-events: auto;
+  opacity: 1;
 }
 
 #add-patient {
