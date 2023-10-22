@@ -2,7 +2,6 @@ document.addEventListener("click", event => {
   const isDropdownButton = event.target.matches("[data-dropdown-button]");
 
   let currentDropdown;
-  console.log("Current dropdown: " + currentDropdown )
   if (isDropdownButton) {
     currentDropdown = event.target.closest("[data-dropdown]");
     currentDropdown.classList.toggle("active");
@@ -11,9 +10,7 @@ document.addEventListener("click", event => {
   // Close all other dropdown
   // or when clicked somewhere other than current dropdown
   document.querySelectorAll("[data-dropdown].active").forEach(dropdown => {
-    console.log("dropdown input :" + dropdown)
     if (dropdown != currentDropdown) {
-      console.log("Entered if statement")
       dropdown.classList.remove('active');
     }
   })
