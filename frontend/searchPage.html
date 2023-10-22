@@ -27,14 +27,24 @@
     <main-content>
       <div class="flex-container">
         <form action="https://www.google.com" method="GET">
-          <div class="input-group">
+          <div>
               <label for="patient_id">Patient ID</label>
-              <input type="search" id="patient_id" name="Patient ID" placeholder="Aadhar Card/Passport/Patient ID" required>
+              <div class="search-input">
+                <div class="dropdown" data-dropdown>
+                  <button class="id-selector-btn" data-dropdown-button>ID Type</button>
+                  <div class="dropdown-menu">
+                    <div>Aadhar Card</div>
+                    <div>Passport</div>
+                    <div>Patient ID</div>
+                  </div>
+                </div>
+                <input type="search" id="patient_id" name="Patient ID" placeholder="Aadhar Card/Passport/Patient ID" required />
+              </div>
           </div>
         </form>
         <div>
-          <button id=search type="submit">Search</button>
-          <button id=add-patient type="button">+ Add new patient</button>
+          <button class="link" id=search type="submit">Search</button>
+          <button class="link" id=add-patient type="button">+ Add new patient</button>
         </div>
 
         <searchResults>
@@ -76,6 +86,7 @@
       <div class="footer dark-blue"></div>
     </footer>
 
+    <script src="./scripts/searchPage.js"></script>
   </body>
 
 </html>
