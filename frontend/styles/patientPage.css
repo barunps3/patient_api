@@ -3,6 +3,7 @@
   --side-bar-height: 100%;
   --patient-detail-box-height: 50px;
   --nav-bar-content-align: center;
+  --nav-bar-content-height: 30px;
 }
 
 .nav-bar {
@@ -40,7 +41,7 @@
   border-radius: 10px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  height: 30px;
+  height: var(--nav-bar-content-height);
   margin-left: 5px;
 }
 
@@ -57,8 +58,10 @@
 
 .user-dropdown > button {
   cursor: pointer;
-  height: 2rem;
+  height: 35px;
   margin-right: 1.5rem;
+  border: none;
+  background-color: var(--header-color-1);
 }
 
 .user-dropdown > button img {
