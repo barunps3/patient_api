@@ -5,26 +5,27 @@
     <title>Patient Details</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles/patientPage.css">
-    <link rel="styleheet" href="styles/basicStyle.css">
+    <link rel="stylesheet" href="styles/basicStyle.css">
   </head>
 
   <body>
     <header>
       <div class="nav-bar dark-blue">
-        <img class="company-icon" src="./icons/ehr.png" alt="ehr icon">
-        <div>
-          <p id="baum">Baum</p>
-          <p id="ehr">EHR</p>
+        <div class="right-aligned">
+          <img class="company-icon" src="./icons/ehr.png" alt="ehr icon">
+          <div>
+            <p id="baum">Baum</p>
+            <p id="ehr">EHR</p>
+          </div>
+          <a class="search" href="./searchPage.html" target="_blank">
+            <button id=go-search-page-btn type="button">Search</button>
+          </a>
         </div>
-        <a class="search" href="./searchPage.html" target="_blank">
-          <button id=go-search-page-btn type="button">Search</button>
-        </a>
-        <div class="user-dropdown">
-          <button>
-            <img src="./icons/person-circle.svg" alt="asacs">
-          </button>
-          <div dropdown-content>
-            <a href="./index.html">Log Out</a>
+        <div class="left-aligned">
+          <div class="user-dropdown" data-dropdown>
+            <button>
+              <img src="./icons/person-circle.svg" alt="asacs">
+            </button>
           </div>
         </div>
       </div>

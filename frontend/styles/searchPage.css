@@ -78,7 +78,7 @@ button.link:hover {
   display: inline-block;
   vertical-align: middle;
   margin-left: 0.5rem;
-  margin-right: 0.5rem;
+  /* margin-right: 0.5rem; */
   /* pointer-events: none; */
   /* padding-right: 2rem; */
 }

@@ -2,15 +2,15 @@
   --side-bar-width: 25vw;
   --side-bar-height: 100%;
   --patient-detail-box-height: 50px;
+  --nav-bar-content-align: center;
 }
 
 .nav-bar {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 5px;
+  justify-content: space-between;
+  align-items: var(--nav-bar-content-align);
 }
 
 .company-icon {
@@ -37,48 +37,32 @@
   width: 80px;
   color: #fff;
   border: none;
-  padding: 5px;
   border-radius: 10px;
   cursor: pointer;
   transition: background-color 0.3s ease;
   height: 30px;
   margin-left: 5px;
-  align-self: flex-end;
 }
 
-/* button:hover {
-  background-color: #0056b3;
-} */
-
-/* #go-search-page {
-} */
+.nav-bar > .right-aligned {
+  display: flex;
+  flex-direction: row;
+  align-items: inherit;
+  gap: 5px;
+}
 
 .user-dropdown {
-  position: relative;
   display: inline-block;
 }
 
 .user-dropdown > button {
-  width: 30px;
-  height: 30px;
   cursor: pointer;
-  background-color: red;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f1f1f1;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-.show {display:block;}
-
-button > img {
   height: 2rem;
-  margin: 25px;
+  margin-right: 1.5rem;
+}
+
+.user-dropdown > button img {
+  height: 100%;
 }
 
 .flex-container {
