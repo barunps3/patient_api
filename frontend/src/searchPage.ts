@@ -1,9 +1,11 @@
-document.addEventListener("click", event => {
-  const isDropdownButton = event.target.matches("[data-dropdown-button]");
+document.addEventListener("click", (event: MouseEvent) => {
+  const target = event.target as HTMLElement
+  console.log(target)
+  const isDropdownButton: boolean = target.matches("[data-dropdown-button]")
 
-  let currentDropdown;
+  let currentDropdown: HTMLDivElement;
   if (isDropdownButton) {
-    currentDropdown = event.target.closest("[data-dropdown]");
+    currentDropdown =  target.closest("[data-dropdown]") as HTMLDivElement
     currentDropdown.classList.toggle("active");
   }
 
@@ -16,12 +18,13 @@ document.addEventListener("click", event => {
   })
 })
 
-const patientId = document.querySelector(".id-menu"); 
-const searchPlaceholder = document.getElementById("patient_id");
-const idSelectorButton = document.querySelector(".id-selector-btn");
+const patientId = document.querySelector(".id-menu") as HTMLDivElement;
+const searchPlaceholder = document.getElementById("patient_id") as HTMLInputElement;
+const idSelectorButton = document.querySelector(".id-selector-btn") as HTMLButtonElement;
 
 patientId.addEventListener("click", event => {
-  let idType = event.target.textContent;
+  const target = event.target as HTMLDivElement
+  let idType = target.textContent;
   // console.log(idType)
   switch (idType) {
     case "Aadhar Card":
@@ -41,5 +44,6 @@ patientId.addEventListener("click", event => {
       idSelectorButton.textContent = "ID type";
   }
 
-  idSelectorButton.closest("[data-dropdown]").classList.remove('active')
+  const dropdown = idSelectorButton.closest("[data-dropdown]") as HTMLDivElement
+  dropdown.classList.remove('active')
 })
