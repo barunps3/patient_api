@@ -1,6 +1,5 @@
 document.addEventListener("click", (event: MouseEvent) => {
   const target = event.target as HTMLElement
-  console.log(target)
   const isDropdownButton: boolean = target.matches("[data-dropdown-button]")
 
   let currentDropdown: HTMLDivElement;
@@ -19,7 +18,7 @@ document.addEventListener("click", (event: MouseEvent) => {
 })
 
 const patientId = document.querySelector(".id-menu") as HTMLDivElement;
-const searchPlaceholder = document.getElementById("patient_id") as HTMLInputElement;
+const searchInput = document.getElementById("patient_id") as HTMLInputElement;
 const idSelectorButton = document.querySelector(".id-selector-btn") as HTMLButtonElement;
 
 patientId.addEventListener("click", event => {
@@ -28,22 +27,109 @@ patientId.addEventListener("click", event => {
   // console.log(idType)
   switch (idType) {
     case "Aadhar Card":
-      searchPlaceholder.setAttribute("placeholder", "Enter Aadhar Card Number")
+      searchInput.setAttribute("placeholder", "Enter Aadhar Card Number")
       idSelectorButton.textContent = "Aadhar Card";
       break;
     case "Passport":
-      searchPlaceholder.setAttribute("placeholder", "Enter Passport Number")
+      searchInput.setAttribute("placeholder", "Enter Passport Number")
       idSelectorButton.textContent = "Passport";
       break;
     case "Patient ID":
-      searchPlaceholder.setAttribute("placeholder", "Enter Patient ID")
+      searchInput.setAttribute("placeholder", "Enter Patient ID")
       idSelectorButton.textContent = "Patient ID";
       break;
     default:
-      searchPlaceholder.setAttribute("placeholder", "Select ID type")
+      searchInput.setAttribute("placeholder", "Select ID type")
       idSelectorButton.textContent = "ID type";
   }
 
   const dropdown = idSelectorButton.closest("[data-dropdown]") as HTMLDivElement
   dropdown.classList.remove('active')
+})
+
+
+type patientSummary = {
+  "name" : {
+    "firstName": string,
+    "lastName": string,
+  },
+  "gender": string,
+  "dateOfBirth": string,
+  "idType": string,
+  "idValue": string 
+}
+
+const umeDetails = {
+  "name" : {
+    "firstName": "Ume",
+    "lastName": "Hani",
+  },
+  "gender": "Female",
+  "dateOfBirth": "11/03/1993",
+  "idType": "Aadhar Card",
+  "idValue": "ZKUP38U"
+}
+
+const barunDetails = {
+  "name" : {
+    "firstName": "Barun",
+    "lastName": "Mazumdar",
+  },
+  "gender": "Male",
+  "dateOfBirth": "14/10/1992",
+  "idType": "Aadhar Card",
+  "idValue": "FFUP38U"
+}
+
+
+const searchResult: patientSummary[] = [umeDetails, barunDetails] 
+function getIdInput() {
+  const inputText = searchInput.value;
+  return inputText
+}
+
+function matchId(idText: string) {
+  for (const patient of searchResult) {
+    if (patient.idValue == idText) {
+      return patient
+    }
+  }
+}
+
+const resultsContainer = document.getElementById("results-container") as HTMLDivElement
+const searchButton = document.getElementById("search") as HTMLButtonElement
+searchButton.addEventListener("click", (e) => {
+  const table = document.createElement("table")
+  const headerRow = table.insertRow(0)
+  headerRow.classList.add("header-row")
+  let nameCell = headerRow.insertCell(0)
+  let genderCell = headerRow.insertCell(1)
+  let dateOfBirth = headerRow.insertCell(2)
+  let idType = headerRow.insertCell(3)
+  let idValue = headerRow.insertCell(4)
+
+  nameCell.innerHTML = "Name"
+  genderCell.innerHTML = "Gender"
+  dateOfBirth.innerHTML = "Date of Birth"
+  idType.innerHTML = "ID Type"
+  idValue.innerHTML = "ID Value"
+
+  const idInput = getIdInput() 
+  const patient = matchId(idInput)
+  for (let i=1; i <=1; i++) {
+    const row = table.insertRow(i)
+    const nameCell = row.insertCell(0)
+    const genderCell = row.insertCell(1)
+    const dateOfBirth = row.insertCell(2)
+    const idType = row.insertCell(3)
+    const idValue = row.insertCell(4)
+
+    nameCell.innerHTML = `${patient?.name.firstName} ${patient?.name.lastName}`
+    genderCell.innerHTML = `${patient?.gender}`
+    dateOfBirth.innerHTML = `${patient?.dateOfBirth}`
+    idType.innerHTML = `${patient?.idType}`
+    idValue.innerHTML = `${patient?.idValue}`
+  }
+
+  resultsContainer.appendChild(table)
 })
