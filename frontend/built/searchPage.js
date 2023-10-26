@@ -105,11 +105,11 @@ searchButton.addEventListener("click", (e) => {
             const dateOfBirth = row.insertCell(2);
             const idType = row.insertCell(3);
             const idValue = row.insertCell(4);
-            nameCell.innerHTML = `${patient === null || patient === void 0 ? void 0 : patient.name.firstName} ${patient === null || patient === void 0 ? void 0 : patient.name.lastName}`;
-            genderCell.innerHTML = `${patient === null || patient === void 0 ? void 0 : patient.gender}`;
-            dateOfBirth.innerHTML = `${patient === null || patient === void 0 ? void 0 : patient.dateOfBirth}`;
-            idType.innerHTML = `${patient === null || patient === void 0 ? void 0 : patient.idType}`;
-            idValue.innerHTML = `${patient === null || patient === void 0 ? void 0 : patient.idValue}`;
+            nameCell.innerHTML = `${patient.name.firstName} ${patient.name.lastName}`;
+            genderCell.innerHTML = `${patient.gender}`;
+            dateOfBirth.innerHTML = `${patient.dateOfBirth}`;
+            idType.innerHTML = `${patient.idType}`;
+            idValue.innerHTML = `${patient.idValue}`;
         }
         resultsContainer.appendChild(table);
     }

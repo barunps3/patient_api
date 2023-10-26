@@ -130,11 +130,11 @@ searchButton.addEventListener("click", (e) => {
       const idType = row.insertCell(3)
       const idValue = row.insertCell(4)
 
-      nameCell.innerHTML = `${patient?.name.firstName} ${patient?.name.lastName}`
-      genderCell.innerHTML = `${patient?.gender}`
-      dateOfBirth.innerHTML = `${patient?.dateOfBirth}`
-      idType.innerHTML = `${patient?.idType}`
-      idValue.innerHTML = `${patient?.idValue}`
+      nameCell.innerHTML = `${patient.name.firstName} ${patient.name.lastName}`
+      genderCell.innerHTML = `${patient.gender}`
+      dateOfBirth.innerHTML = `${patient.dateOfBirth}`
+      idType.innerHTML = `${patient.idType}`
+      idValue.innerHTML = `${patient.idValue}`
     }
 
     resultsContainer.appendChild(table)
