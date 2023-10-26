@@ -49,14 +49,14 @@ patientId.addEventListener("click", event => {
 
 
 type patientSummary = {
-  "name" : {
-    "firstName": string,
-    "lastName": string,
+  name : {
+    firstName: string,
+    lastName: string,
   },
-  "gender": string,
-  "dateOfBirth": string,
-  "idType": string,
-  "idValue": string 
+  gender: string,
+  dateOfBirth: string,
+  idType: string,
+  idValue: string 
 }
 
 const umeDetails = {
