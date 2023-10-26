@@ -99,14 +99,19 @@ function matchId(idText: string) {
 const resultsContainer = document.getElementById("results-container") as HTMLDivElement
 const searchButton = document.getElementById("search") as HTMLButtonElement
 searchButton.addEventListener("click", (e) => {
+  const resultTable = resultsContainer.querySelector("#results-container > table")
+  console.log(resultTable)
+  if (resultTable != null) {
+    resultsContainer.removeChild(resultTable)
+  }
   const table = document.createElement("table")
   const headerRow = table.insertRow(0)
   headerRow.classList.add("header-row")
-  let nameCell = headerRow.insertCell(0)
-  let genderCell = headerRow.insertCell(1)
-  let dateOfBirth = headerRow.insertCell(2)
-  let idType = headerRow.insertCell(3)
-  let idValue = headerRow.insertCell(4)
+  const nameCell = headerRow.insertCell(0)
+  const genderCell = headerRow.insertCell(1)
+  const dateOfBirth = headerRow.insertCell(2)
+  const idType = headerRow.insertCell(3)
+  const idValue = headerRow.insertCell(4)
 
   nameCell.innerHTML = "Name"
   genderCell.innerHTML = "Gender"
@@ -116,20 +121,22 @@ searchButton.addEventListener("click", (e) => {
 
   const idInput = getIdInput() 
   const patient = matchId(idInput)
-  for (let i=1; i <=1; i++) {
-    const row = table.insertRow(i)
-    const nameCell = row.insertCell(0)
-    const genderCell = row.insertCell(1)
-    const dateOfBirth = row.insertCell(2)
-    const idType = row.insertCell(3)
-    const idValue = row.insertCell(4)
+  if (patient != null) {
+    for (let i=1; i <=1; i++) {
+      const row = table.insertRow(i)
+      const nameCell = row.insertCell(0)
+      const genderCell = row.insertCell(1)
+      const dateOfBirth = row.insertCell(2)
+      const idType = row.insertCell(3)
+      const idValue = row.insertCell(4)
 
-    nameCell.innerHTML = `${patient?.name.firstName} ${patient?.name.lastName}`
-    genderCell.innerHTML = `${patient?.gender}`
-    dateOfBirth.innerHTML = `${patient?.dateOfBirth}`
-    idType.innerHTML = `${patient?.idType}`
-    idValue.innerHTML = `${patient?.idValue}`
+      nameCell.innerHTML = `${patient?.name.firstName} ${patient?.name.lastName}`
+      genderCell.innerHTML = `${patient?.gender}`
+      dateOfBirth.innerHTML = `${patient?.dateOfBirth}`
+      idType.innerHTML = `${patient?.idType}`
+      idValue.innerHTML = `${patient?.idValue}`
+    }
+
+    resultsContainer.appendChild(table)
   }
-
-  resultsContainer.appendChild(table)
 })

@@ -77,14 +77,19 @@ function matchId(idText) {
 const resultsContainer = document.getElementById("results-container");
 const searchButton = document.getElementById("search");
 searchButton.addEventListener("click", (e) => {
+    const resultTable = resultsContainer.querySelector("#results-container > table");
+    console.log(resultTable);
+    if (resultTable != null) {
+        resultsContainer.removeChild(resultTable);
+    }
     const table = document.createElement("table");
     const headerRow = table.insertRow(0);
     headerRow.classList.add("header-row");
-    let nameCell = headerRow.insertCell(0);
-    let genderCell = headerRow.insertCell(1);
-    let dateOfBirth = headerRow.insertCell(2);
-    let idType = headerRow.insertCell(3);
-    let idValue = headerRow.insertCell(4);
+    const nameCell = headerRow.insertCell(0);
+    const genderCell = headerRow.insertCell(1);
+    const dateOfBirth = headerRow.insertCell(2);
+    const idType = headerRow.insertCell(3);
+    const idValue = headerRow.insertCell(4);
     nameCell.innerHTML = "Name";
     genderCell.innerHTML = "Gender";
     dateOfBirth.innerHTML = "Date of Birth";
@@ -92,18 +97,20 @@ searchButton.addEventListener("click", (e) => {
     idValue.innerHTML = "ID Value";
     const idInput = getIdInput();
     const patient = matchId(idInput);
-    for (let i = 1; i <= 1; i++) {
-        const row = table.insertRow(i);
-        const nameCell = row.insertCell(0);
-        const genderCell = row.insertCell(1);
-        const dateOfBirth = row.insertCell(2);
-        const idType = row.insertCell(3);
-        const idValue = row.insertCell(4);
-        nameCell.innerHTML = `${patient === null || patient === void 0 ? void 0 : patient.name.firstName} ${patient === null || patient === void 0 ? void 0 : patient.name.lastName}`;
-        genderCell.innerHTML = `${patient === null || patient === void 0 ? void 0 : patient.gender}`;
-        dateOfBirth.innerHTML = `${patient === null || patient === void 0 ? void 0 : patient.dateOfBirth}`;
-        idType.innerHTML = `${patient === null || patient === void 0 ? void 0 : patient.idType}`;
-        idValue.innerHTML = `${patient === null || patient === void 0 ? void 0 : patient.idValue}`;
+    if (patient != null) {
+        for (let i = 1; i <= 1; i++) {
+            const row = table.insertRow(i);
+            const nameCell = row.insertCell(0);
+            const genderCell = row.insertCell(1);
+            const dateOfBirth = row.insertCell(2);
+            const idType = row.insertCell(3);
+            const idValue = row.insertCell(4);
+            nameCell.innerHTML = `${patient === null || patient === void 0 ? void 0 : patient.name.firstName} ${patient === null || patient === void 0 ? void 0 : patient.name.lastName}`;
+            genderCell.innerHTML = `${patient === null || patient === void 0 ? void 0 : patient.gender}`;
+            dateOfBirth.innerHTML = `${patient === null || patient === void 0 ? void 0 : patient.dateOfBirth}`;
+            idType.innerHTML = `${patient === null || patient === void 0 ? void 0 : patient.idType}`;
+            idValue.innerHTML = `${patient === null || patient === void 0 ? void 0 : patient.idValue}`;
+        }
+        resultsContainer.appendChild(table);
     }
-    resultsContainer.appendChild(table);
 });
