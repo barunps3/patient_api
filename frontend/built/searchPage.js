@@ -1,46 +1,23 @@
 "use strict";
-document.addEventListener("click", (event) => {
-    const target = event.target;
-    const isDropdownButton = target.matches("[data-dropdown-button]");
-    let currentDropdown;
-    if (isDropdownButton) {
-        currentDropdown = target.closest("[data-dropdown]");
-        currentDropdown.classList.toggle("active");
-    }
-    // Close all other dropdown
-    // or when clicked somewhere other than current dropdown
-    document.querySelectorAll("[data-dropdown].active").forEach(dropdown => {
-        if (dropdown != currentDropdown) {
-            dropdown.classList.remove('active');
-        }
-    });
-});
 const patientId = document.querySelector(".id-menu");
 const searchInput = document.getElementById("patient_id");
-const idSelectorButton = document.querySelector(".id-selector-btn");
-patientId.addEventListener("click", event => {
-    const target = event.target;
-    let idType = target.textContent;
+const idTypeSelector = document.querySelector("select#id-type");
+idTypeSelector.addEventListener("change", () => {
+    const idType = idTypeSelector.options[idTypeSelector.selectedIndex];
     // console.log(idType)
-    switch (idType) {
-        case "Aadhar Card":
+    switch (idType.value) {
+        case "aadhar-card":
             searchInput.setAttribute("placeholder", "Enter Aadhar Card Number");
-            idSelectorButton.textContent = "Aadhar Card";
             break;
-        case "Passport":
+        case "passport":
             searchInput.setAttribute("placeholder", "Enter Passport Number");
-            idSelectorButton.textContent = "Passport";
             break;
-        case "Patient ID":
+        case "hospital-patient-id":
             searchInput.setAttribute("placeholder", "Enter Patient ID");
-            idSelectorButton.textContent = "Patient ID";
             break;
         default:
             searchInput.setAttribute("placeholder", "Select ID type");
-            idSelectorButton.textContent = "ID type";
     }
-    const dropdown = idSelectorButton.closest("[data-dropdown]");
-    dropdown.classList.remove('active');
 });
 const umeDetails = {
     "name": {
