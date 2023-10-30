@@ -16,8 +16,6 @@ idTypeSelector.addEventListener("change", () => {
     case "hospital-patient-id":
       searchInput.setAttribute("placeholder", "Enter Patient ID")
       break;
-    default:
-      searchInput.setAttribute("placeholder", "Select ID type")
   }
 })
 
