@@ -26,18 +26,15 @@
     <!-- Search Form with Results -->
     <main-content>
       <div class="flex-container">
-        <div class="search-input">
-          <div class="dropdown" data-dropdown>
-            <!-- <button class="id-selector-btn" data-dropdown-button>ID Type <img src="./icons/chevron-down.svg" alt="chevron"></button> -->
-            <button class="id-selector-btn" data-dropdown-button>ID Type</button>
-            <div class="dropdown-menu id-menu">
-              <div class="id-type">Aadhar Card</div>
-              <div class="id-type">Passport</div>
-              <div class="id-type">Patient ID</div>
-            </div>
-          </div>
+        <form class="search-input">
+            <select name="id-selector" id="id-type">
+              <option value="default">ID Type</option>
+              <option value="aadhar-card">Aadhar Card</option>
+              <option value="passport">Passport</option>
+              <option value="hospital-patient-id">Patient ID</option>
+            </select>
           <input type="search" id="patient_id" name="Patient ID" placeholder="Select the ID type" required />
-        </div>
+        </form>
         <div>
           <button class="link" id=search type="submit">Search</button>
           <button class="link" id=add-patient type="button">+ Add new patient</button>
