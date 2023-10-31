@@ -26,17 +26,17 @@
     <!-- Search Form with Results -->
     <main-content>
       <div class="flex-container">
-        <form class="search-input">
-            <select name="id-selector" id="id-type">
-              <option value="default" disabled selected>ID Type</option>
+        <form id="search-id" class="search-input">
+            <select name="id-selector" id="id-type" placeholder="Test" required>
+              <option value="" disabled selected>ID Type</option>
               <option value="aadhar-card">Aadhar Card</option>
               <option value="passport">Passport</option>
               <option value="hospital-patient-id">Patient ID</option>
             </select>
-          <input type="search" id="patient_id" name="Patient ID" placeholder="-- Please select ID type --" required />
+          <input type="search" id="patient_id" name="Patient ID" placeholder="-- Please select ID type --" required="true" />
         </form>
         <div>
-          <button class="link" id=search type="submit">Search</button>
+          <button class="link" form="search-id" id="search type="submit">Search</button>
           <button class="link" id=add-patient type="button">+ Add new patient</button>
         </div>
 
