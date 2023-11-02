@@ -25,18 +25,18 @@ type MetaInfo struct {
 }
 
 type XRay struct {
-	Date     string
-	BodyPart string
-	ImageUrl string
+	Date     string `bson:"Date"`
+	BodyPart string `bson:"BodyPart"`
+	ImageUrl string `bson:"ImageUrl"`
 }
 
 type XRays struct {
-	Id        string
-	FirstName string
-	LastName  string
-	Age       uint
-	Gender    string
-	XRays     []XRay
+	Id        string `bson:"Id"`
+	FirstName string `bson:"FirstName"`
+	LastName  string `bson:"LastName"`
+	Age       uint   `bson:"Age"`
+	Gender    string `bson:"Gender"`
+	XRays     []XRay `bson:"XRays"`
 }
 
 type CTScan struct {

@@ -116,6 +116,10 @@ func getpatientXrays(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func getVaccinations()
+
+func getCTScans()
+
 func main() {
 	myRouter := mux.NewRouter().StrictSlash(true)
 
@@ -127,6 +131,16 @@ func main() {
 	myRouter.HandleFunc("/patient", createNewPatient).Methods("POST")
 
 	myRouter.HandleFunc("/xrays/{Id}", getpatientXrays).Methods("GET")
+	// TODO
+	// Vaccination
+	// CT Scan
+	// Mamogram (X-rays)
+	// Blood Tests (Diabetes Profile, Vitamins, Calcium)
+	// Kidney Function Tests
+	// Liver Profile Tests
+	// Cardiac Profile (ECG, Echo)
+	// Pap Smear
+	// Historical Consultations
 
 	log.Fatal(http.ListenAndServe(":8080", myRouter))
 }

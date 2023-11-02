@@ -47,7 +47,9 @@ func generatePatientId(patient *Identity) string {
 	return hex.EncodeToString(id_bytes[:])
 }
 
-func getPatientAge(patient *Identity) uint
+func getPatientAge(patient *Identity) uint {
+	return 30
+}
 
 func generatePatientDocument(patient *Identity) {
 	client := getDbClient()
@@ -68,8 +70,24 @@ func generateRelatedRegisters(patient *Identity) {
 	createEmptyXRayRegister(patient)
 }
 
-func createEmptyXRayRegister(identity *Identity) {
+func createEmptyXRayRegister(patient *Identity) {
+	client := getDbClient()
+	xraysCollection := client.Database(dbName).Collection(patient_xrays)
 
+	var patientXrays XRays
+	patientXrays.Id = patient.Id
+	patientXrays.FirstName = patient.FirstName
+	patientXrays.LastName = patient.LastName
+	patientXrays.Gender = patient.Gender
+	patientXrays.Age = patient.Age
+	patientXrays.XRays = []XRay{}
+
+	patientXRaysBson, _ := bson.Marshal(patientXrays)
+	_, err := xraysCollection.InsertOne(context.TODO(), patientXRaysBson)
+
+	if err != nil {
+		panic(err)
+	}
 }
 
 func createEmptyCTScanRegister(identity *Identity) {
