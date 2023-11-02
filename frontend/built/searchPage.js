@@ -17,6 +17,27 @@ idTypeSelector.addEventListener("change", () => {
             break;
     }
 });
+const headers = new Headers({
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "*"
+});
+const searchForm = new FormData(document.getElementById("search-id"));
+console.log(searchForm);
+async function searchPatientById(searchForm) {
+    try {
+        const response = await fetch("https://www.google.com", {
+            method: "POST",
+            body: searchForm,
+            headers: headers
+        });
+        const foundPatients = await response.json();
+        console.log("Success:", foundPatients);
+    }
+    catch (error) {
+        console.error(error);
+    }
+}
+searchPatientById(searchForm);
 const umeDetails = {
     "name": {
         "firstName": "Ume",

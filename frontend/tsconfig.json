@@ -3,7 +3,7 @@
       "outDir": "./built",
       "allowJs": true,
       "strict": true,
-      "target": "ES2016"
+      "target": "ESNext"
     },
     "include": ["./src/**/*"]
 }
