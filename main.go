@@ -7,7 +7,7 @@ import (
 	"log"
 	"net/http"
 
-	"medicalApp/patient"
+	_ "github.com/lib/pq"
 
 	"github.com/gorilla/mux"
 	"go.mongodb.org/mongo-driver/bson"
@@ -116,9 +116,9 @@ func getpatientXrays(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func getVaccinations()
+func getVaccinations() {}
 
-func getCTScans()
+func getCTScans() {}
 
 func main() {
 	myRouter := mux.NewRouter().StrictSlash(true)
