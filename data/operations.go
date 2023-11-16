@@ -6,9 +6,9 @@ import (
 )
 
 type IPatientDAO interface {
-	GetAll() ([]patient, error)
-	GetByUUID(id string) (patient, error)
-	Add(patient patient) error
+	GetAll() ([]Patient, error)
+	GetByUUID(id string) (Patient, error)
+	Add(patient Patient) error
 }
 
 type PatientExample struct {
@@ -19,40 +19,40 @@ type patientDAO struct {
 	db *sql.DB
 }
 
-func (dao *patientDAO) GetAll() ([]patient, error) {
+func (dao *patientDAO) GetAll() ([]Patient, error) {
 	rows, err := dao.db.Query("SELECT * FROM patients")
 	if err != nil {
 		fmt.Println(err)
 	}
 	fmt.Println("row:", rows)
 
-	var patients []patient
+	var patients []Patient
 	for rows.Next() {
-		var patient patient
+		var patient Patient
 		if err := rows.Scan(
-			&patient.patientId,
-			&patient.firstName,
-			&patient.lastName,
-			&patient.gender,
-			&patient.dateOfBirth,
-			&patient.insuranceId,
-			&patient.phoneNum,
-			&patient.emergencyPhoneNum,
-			&patient.address,
+			&patient.Id,
+			&patient.FirstName,
+			&patient.LastName,
+			&patient.Gender,
+			&patient.DateOfBirth,
+			&patient.InsuranceId,
+			&patient.PhoneNum,
+			&patient.EmergencyPhoneNum,
+			&patient.Address,
 		); err != nil {
 			fmt.Errorf("err: %v", err)
 		}
-		fmt.Println(patient.dateOfBirth.Format("2006-01-02"))
+		fmt.Println(patient.DateOfBirth.Format("2006-01-02"))
 		patients = append(patients, patient)
 	}
 	return patients, nil
 }
 
-func (dao *patientDAO) GetByUUID(id string) (patient, error) {
+func (dao *patientDAO) GetByUUID(id string) (Patient, error) {
 	row := dao.db.QueryRow("SELECT * FROM patients WHERE id=$1", id)
 
-	var patient patient
-	if err := row.Scan(&patient.patientId); err != nil {
+	var patient Patient
+	if err := row.Scan(&patient.Id); err != nil {
 		fmt.Printf("Could not fetch ID of patient from DB")
 	}
 	return patient, nil

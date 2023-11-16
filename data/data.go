@@ -2,16 +2,16 @@ package data
 
 import "time"
 
-type patient struct {
-	patientId         string
-	firstName         string
-	lastName          string
-	gender            string
-	dateOfBirth       time.Time
-	insuranceId       string
-	phoneNum          string
-	emergencyPhoneNum string
-	address           string
+type Patient struct {
+	Id                string
+	FirstName         string
+	LastName          string
+	Gender            string
+	DateOfBirth       time.Time
+	InsuranceId       string
+	PhoneNum          string
+	EmergencyPhoneNum string
+	Address           string
 }
 
 // type Identity struct {
