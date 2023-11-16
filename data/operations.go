@@ -11,6 +11,10 @@ type IPatientDAO interface {
 	Add(patient patient) error
 }
 
+type PatientExample struct {
+	Example string
+}
+
 type patientDAO struct {
 	db *sql.DB
 }
