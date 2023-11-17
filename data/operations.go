@@ -3,6 +3,7 @@ package data
 import (
 	"database/sql"
 	"fmt"
+	"time"
 )
 
 type IPatientDAO interface {
@@ -11,15 +12,11 @@ type IPatientDAO interface {
 	Add(patient Patient) error
 }
 
-type PatientExample struct {
-	Example string
-}
-
-type patientDAO struct {
+type PatientDAO struct {
 	db *sql.DB
 }
 
-func (dao *patientDAO) GetAll() ([]Patient, error) {
+func (dao *PatientDAO) GetAll() ([]Patient, error) {
 	rows, err := dao.db.Query("SELECT * FROM patients")
 	if err != nil {
 		fmt.Println(err)
@@ -29,12 +26,13 @@ func (dao *patientDAO) GetAll() ([]Patient, error) {
 	var patients []Patient
 	for rows.Next() {
 		var patient Patient
+		var timeOfBirth time.Time
 		if err := rows.Scan(
 			&patient.Id,
 			&patient.FirstName,
 			&patient.LastName,
 			&patient.Gender,
-			&patient.DateOfBirth,
+			&timeOfBirth,
 			&patient.InsuranceId,
 			&patient.PhoneNum,
 			&patient.EmergencyPhoneNum,
@@ -42,20 +40,34 @@ func (dao *patientDAO) GetAll() ([]Patient, error) {
 		); err != nil {
 			fmt.Errorf("err: %v", err)
 		}
-		fmt.Println(patient.DateOfBirth.Format("2006-01-02"))
+		patient.DateOfBirth = timeOfBirth.Format("2006-01-02")
 		patients = append(patients, patient)
 	}
 	return patients, nil
 }
 
-func (dao *patientDAO) GetByUUID(id string) (Patient, error) {
-	row := dao.db.QueryRow("SELECT * FROM patients WHERE id=$1", id)
+func (dao *PatientDAO) GetByUUID(id string) Patient {
+	row := dao.db.QueryRow("SELECT * FROM patients WHERE patientId=$1", id)
+	defer dao.db.Close()
 
 	var patient Patient
-	if err := row.Scan(&patient.Id); err != nil {
-		fmt.Printf("Could not fetch ID of patient from DB")
+	var timeOfBirth time.Time
+	if err := row.Scan(
+		&patient.Id,
+		&patient.FirstName,
+		&patient.LastName,
+		&patient.Gender,
+		&timeOfBirth,
+		&patient.InsuranceId,
+		&patient.PhoneNum,
+		&patient.EmergencyPhoneNum,
+		&patient.Address,
+	); err != nil {
+		fmt.Printf("Could not fetch ID of patient from DB: %v", err)
 	}
-	return patient, nil
+
+	patient.DateOfBirth = timeOfBirth.Format("2006-01-02")
+	return patient
 }
 
 // func GetByFilter(filter bson.M) []Identity {

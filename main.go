@@ -1,16 +1,15 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
-	"io"
 	"log"
 	"net/http"
 
 	_ "github.com/lib/pq"
 
+	"medicalApp/api"
+
 	"github.com/gorilla/mux"
-	"go.mongodb.org/mongo-driver/bson"
 )
 
 func homePage(w http.ResponseWriter, r *http.Request) {
@@ -18,119 +17,87 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Endpoint Hit: homePage")
 }
 
-func returnAllPatients(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("Endpoint Hit: returnAllPatients: List of all patients was retrieved by Barun Mazumdar")
+// func returnSinglePatient(w http.ResponseWriter, r *http.Request) {
+// 	fmt.Println("Endpoint Hit: returnSinglePatient")
+// 	vars := mux.Vars(r)
+// 	patientId := vars["Id"]
+// 	filterMap := bson.M{"Id": patientId}
 
-	var filterMap = bson.M{}
-	for _, param := range patientFilterParams {
-		var paramVal string = r.URL.Query().Get(param)
-		if paramVal != "" {
-			filterMap[param] = paramVal
-		}
-	}
-	var patients []patient.Identity = patient.GetByFilter(filterMap)
-	printPatientData(w, patients)
-}
+// 	var patient []patient.Identity = patient.GetByFilter(filterMap)
+// 	if patient != nil {
+// 		printPatientData(w, patient)
+// 	} else {
+// 		fmt.Println("No patients found on Endpoint returnSinglePatient")
+// 	}
+// }
 
-func returnSinglePatient(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("Endpoint Hit: returnSinglePatient")
-	vars := mux.Vars(r)
-	patientId := vars["Id"]
-	filterMap := bson.M{"Id": patientId}
+// func createNewPatient(w http.ResponseWriter, r *http.Request) {
+// 	reqBody, _ := io.ReadAll(r.Body)
+// 	var patientInfo patient.Identity
+// 	json.Unmarshal(reqBody, &patientInfo)
 
-	var patient []patient.Identity = patient.GetByFilter(filterMap)
-	if patient != nil {
-		printPatientData(w, patient)
-	} else {
-		fmt.Println("No patients found on Endpoint returnSinglePatient")
-	}
-}
+// 	if patient.GetByFilter(bson.M{"Id": patientInfo.Id}) != nil {
+// 		fmt.Printf("Patient with ID: %v already exists on Endpoint createNewPatient", patientInfo.Id)
+// 	} else {
+// 		// TODO: Validate before insertion
+// 		patient.CreateOneIdentity(&patientInfo)
+// 		json.NewEncoder(w).Encode(patientInfo)
+// 	}
+// }
 
-func createNewPatient(w http.ResponseWriter, r *http.Request) {
-	reqBody, _ := io.ReadAll(r.Body)
-	var patientInfo patient.Identity
-	json.Unmarshal(reqBody, &patientInfo)
+// func patchPatient(w http.ResponseWriter, r *http.Request) {
+// 	fmt.Println("Endpoint Hit: patchPatient")
+// 	vars := mux.Vars(r)
+// 	Id := vars["Id"]
+// 	reqBody, _ := io.ReadAll(r.Body)
 
-	if patient.GetByFilter(bson.M{"Id": patientInfo.Id}) != nil {
-		fmt.Printf("Patient with ID: %v already exists on Endpoint createNewPatient", patientInfo.Id)
-	} else {
-		// TODO: Validate before insertion
-		patient.CreateOneIdentity(&patientInfo)
-		json.NewEncoder(w).Encode(patientInfo)
-	}
-}
+// 	var patchMap map[string]interface{}
+// 	json.Unmarshal(reqBody, &patchMap)
 
-func patchPatient(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("Endpoint Hit: patchPatient")
-	vars := mux.Vars(r)
-	Id := vars["Id"]
-	reqBody, _ := io.ReadAll(r.Body)
+// 	fmt.Printf("map[string]interface{} format patch: %v", patchMap)
 
-	var patchMap map[string]interface{}
-	json.Unmarshal(reqBody, &patchMap)
+// 	update := bson.D{}
+// 	for k, v := range patchMap {
+// 		fmt.Printf("type of value: %T", v)
+// 		update = append(update, bson.E{Key: k, Value: v})
+// 	}
 
-	fmt.Printf("map[string]interface{} format patch: %v", patchMap)
+// 	var filter = bson.M{"Id": Id}
 
-	update := bson.D{}
-	for k, v := range patchMap {
-		fmt.Printf("type of value: %T", v)
-		update = append(update, bson.E{Key: k, Value: v})
-	}
+// 	updatedPatient := patient.UpdateOneByFilter(filter, update)
+// 	if updatedPatient != nil {
+// 		printPatientData(w, updatedPatient)
+// 	} else {
+// 		fmt.Println("No patients found to patch")
+// 	}
+// }
 
-	var filter = bson.M{"Id": Id}
+// func deletePatient(w http.ResponseWriter, r *http.Request) {
+// 	fmt.Println("Endpoint Hit: deletePatient")
+// 	vars := mux.Vars(r)
+// 	patientId := vars["Id"]
+// 	fmt.Print(patientId)
+// 	filterMap := bson.M{"Id": patientId}
 
-	updatedPatient := patient.UpdateOneByFilter(filter, update)
-	if updatedPatient != nil {
-		printPatientData(w, updatedPatient)
-	} else {
-		fmt.Println("No patients found to patch")
-	}
-}
-
-func deletePatient(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("Endpoint Hit: deletePatient")
-	vars := mux.Vars(r)
-	patientId := vars["Id"]
-	fmt.Print(patientId)
-	filterMap := bson.M{"Id": patientId}
-
-	var patients []patient.Identity = patient.GetByFilter(filterMap)
-	if patients != nil {
-		patient.DeleteOneByFilter(filterMap)
-	} else {
-		fmt.Println("Endpoint Hit: Patient does not exist.")
-	}
-}
-
-func getpatientXrays(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("Endpoint Hit: getpatient.Xrays")
-	vars := mux.Vars(r)
-	patientId := vars["Id"]
-	filterMap := bson.M{"Id": patientId}
-
-	var xrays []patient.XRays = patient.GetXraysByFilter(filterMap)
-	if xrays != nil {
-		printPatientData(w, xrays)
-	} else {
-		fmt.Println("No Xray found on Endpoint getpatient.Xrays")
-	}
-}
-
-func getVaccinations() {}
-
-func getCTScans() {}
+// 	var patients []patient.Identity = patient.GetByFilter(filterMap)
+// 	if patients != nil {
+// 		patient.DeleteOneByFilter(filterMap)
+// 	} else {
+// 		fmt.Println("Endpoint Hit: Patient does not exist.")
+// 	}
+// }
+// func getpatientXrays(w http.ResponseWriter, r *http.Request) { // 	fmt.Println("Endpoint Hit: getpatient.Xrays") // 	vars := mux.Vars(r) // 	patientId := vars["Id"] // 	filterMap := bson.M{"Id": patientId} // 	var xrays []patient.XRays = patient.GetXraysByFilter(filterMap) // 	if xrays != nil { // 		printPatientData(w, xrays) // 	} else { // 		fmt.Println("No Xray found on Endpoint getpatient.Xrays") // 	} // } // func getVaccinations() {}
+// func getCTScans() {}
 
 func main() {
 	myRouter := mux.NewRouter().StrictSlash(true)
 
 	myRouter.HandleFunc("/", homePage)
-	myRouter.HandleFunc("/patients", returnAllPatients)
-	myRouter.HandleFunc("/patient/{Id}", deletePatient).Methods("DELETE")
-	myRouter.HandleFunc("/patient/{Id}", returnSinglePatient).Methods("GET")
-	myRouter.HandleFunc("/patient/{Id}", patchPatient).Methods("PATCH")
-	myRouter.HandleFunc("/patient", createNewPatient).Methods("POST")
+	myRouter.HandleFunc("/patient/{Id}", api.GetPatientByUUID).Methods("GET")
+	// myRouter.HandleFunc("/patient/{Id}", patchPatient).Methods("PATCH")
+	// myRouter.HandleFunc("/patient", createNewPatient).Methods("POST")
 
-	myRouter.HandleFunc("/xrays/{Id}", getpatientXrays).Methods("GET")
+	// myRouter.HandleFunc("/xrays/{Id}", getpatientXrays).Methods("GET")
 	// TODO
 	// Vaccination
 	// CT Scan

@@ -1,13 +1,11 @@
 package data
 
-import "time"
-
 type Patient struct {
 	Id                string
 	FirstName         string
 	LastName          string
 	Gender            string
-	DateOfBirth       time.Time
+	DateOfBirth       string
 	InsuranceId       string
 	PhoneNum          string
 	EmergencyPhoneNum string
