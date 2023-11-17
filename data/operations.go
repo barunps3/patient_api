@@ -16,8 +16,20 @@ type PatientDAO struct {
 	db *sql.DB
 }
 
+var PatientColumns = `SELECT 
+    patientId,
+    firstName,
+    lastName,
+    gender,
+    dateOfBirth,
+    COALESCE(insuranceId, '') AS insuranceId,
+    phoneNum,
+    COALESCE(emergencyPhoneNum, '') AS emergencyPhoneNum,
+    address
+    FROM patients`
+
 func (dao *PatientDAO) GetAll() ([]Patient, error) {
-	rows, err := dao.db.Query("SELECT * FROM patients")
+	rows, err := dao.db.Query(PatientColumns)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -47,7 +59,7 @@ func (dao *PatientDAO) GetAll() ([]Patient, error) {
 }
 
 func (dao *PatientDAO) GetByUUID(id string) Patient {
-	row := dao.db.QueryRow("SELECT * FROM patients WHERE patientId=$1", id)
+	row := dao.db.QueryRow(fmt.Sprintf("%s WHERE patientId=$1", PatientColumns), id)
 	defer dao.db.Close()
 
 	var patient Patient
