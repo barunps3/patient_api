@@ -31,7 +31,6 @@ func GetPatientByIdType(w http.ResponseWriter, r *http.Request) {
 		var patientDAO = data.NewPatientDAO()
 		patient := patientDAO.GetByIdType(idType, idValue)
 		fmt.Println(patient)
-		w.Header().Set("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(patient)
 	} else {
 		http.NotFound(w, r)

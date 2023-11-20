@@ -79,36 +79,37 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 // 	fmt.Print(patientId)
 // 	filterMap := bson.M{"Id": patientId}
 
-// 	var patients []patient.Identity = patient.GetByFilter(filterMap)
-// 	if patients != nil {
-// 		patient.DeleteOneByFilter(filterMap)
-// 	} else {
-// 		fmt.Println("Endpoint Hit: Patient does not exist.")
-// 	}
-// }
+//		var patients []patient.Identity = patient.GetByFilter(filterMap)
+//		if patients != nil {
+//			patient.DeleteOneByFilter(filterMap)
+//		} else {
+//			fmt.Println("Endpoint Hit: Patient does not exist.")
+//		}
+//	}
+//
 // func getpatientXrays(w http.ResponseWriter, r *http.Request) { // 	fmt.Println("Endpoint Hit: getpatient.Xrays") // 	vars := mux.Vars(r) // 	patientId := vars["Id"] // 	filterMap := bson.M{"Id": patientId} // 	var xrays []patient.XRays = patient.GetXraysByFilter(filterMap) // 	if xrays != nil { // 		printPatientData(w, xrays) // 	} else { // 		fmt.Println("No Xray found on Endpoint getpatient.Xrays") // 	} // } // func getVaccinations() {}
 // func getCTScans() {}
+
+// Custom middleware to set standard headers
+func standardHeadersMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		// Set standard headers here
+		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
+
+		// Call the next handler in the chain
+		next.ServeHTTP(w, r)
+	})
+}
 
 func main() {
 	myRouter := mux.NewRouter().StrictSlash(true)
 
+	// Use the custom middleware for all routes
+	myRouter.Use(standardHeadersMiddleware)
+
 	myRouter.HandleFunc("/", homePage)
-	myRouter.HandleFunc("/patient/{uuid}", api.GetPatientByUUID).Methods("GET")
 	myRouter.HandleFunc("/patient", api.GetPatientByIdType).Methods("GET")
-	// myRouter.HandleFunc("/patient/{Id}", patchPatient).Methods("PATCH")
-	// myRouter.HandleFunc("/patient", createNewPatient).Methods("POST")
-
-	// myRouter.HandleFunc("/xrays/{Id}", getpatientXrays).Methods("GET")
-	// TODO
-	// Vaccination
-	// CT Scan
-	// Mamogram (X-rays)
-	// Blood Tests (Diabetes Profile, Vitamins, Calcium)
-	// Kidney Function Tests
-	// Liver Profile Tests
-	// Cardiac Profile (ECG, Echo)
-	// Pap Smear
-	// Historical Consultations
-
+	myRouter.HandleFunc("/patient/{uuid}", api.GetPatientByUUID).Methods("GET")
 	log.Fatal(http.ListenAndServe(":8080", myRouter))
 }
