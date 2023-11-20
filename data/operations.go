@@ -59,7 +59,7 @@ func (dao *PatientDAO) GetAll() ([]Patient, error) {
 }
 
 func (dao *PatientDAO) GetByUUID(id string) Patient {
-	row := dao.db.QueryRow(fmt.Sprintf("%s WHERE patientId=$1", PatientColumns), id)
+	row := dao.db.QueryRow(fmt.Sprintf("%s WHERE patientUUID=$1", PatientColumns), id)
 	defer dao.db.Close()
 
 	var patient Patient
