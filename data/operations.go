@@ -17,7 +17,7 @@ type PatientDAO struct {
 }
 
 var PatientColumns = `SELECT 
-    patientId,
+    patientUUID,
     firstName,
     lastName,
     gender,
@@ -79,6 +79,19 @@ func (dao *PatientDAO) GetByUUID(id string) Patient {
 	}
 
 	patient.DateOfBirth = timeOfBirth.Format("2006-01-02")
+	return patient
+}
+
+func (dao *PatientDAO) GetByIdType(idType string, idVal string) Patient {
+	row := dao.db.QueryRow(`SELECT patientuuid FROM patientids
+		WHERE idtype=$1 AND idvalue=$2`, idType, idVal)
+	defer dao.db.Close()
+	var patient Patient
+	if err := row.Scan(&patient.Id); err != nil {
+		fmt.Printf("Could not fetch ID of patient from DB: %v", err)
+	}
+	fmt.Println(patient.Id)
+	patient = dao.GetByUUID(patient.Id)
 	return patient
 }
 

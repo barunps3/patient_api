@@ -93,7 +93,8 @@ func main() {
 	myRouter := mux.NewRouter().StrictSlash(true)
 
 	myRouter.HandleFunc("/", homePage)
-	myRouter.HandleFunc("/patient/{Id}", api.GetPatientByUUID).Methods("GET")
+	myRouter.HandleFunc("/patient/{uuid}", api.GetPatientByUUID).Methods("GET")
+	myRouter.HandleFunc("/patient", api.GetPatientByIdType).Methods("GET")
 	// myRouter.HandleFunc("/patient/{Id}", patchPatient).Methods("PATCH")
 	// myRouter.HandleFunc("/patient", createNewPatient).Methods("POST")
 

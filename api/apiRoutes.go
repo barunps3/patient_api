@@ -11,7 +11,6 @@ import (
 )
 
 func GetPatientByUUID(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("Endpoint Hit: returnSinglePatient")
 	queryParams := mux.Vars(r)
 	reqPatientId := queryParams["Id"]
 
@@ -20,4 +19,21 @@ func GetPatientByUUID(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(patient)
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(patient)
+}
+
+func GetPatientByIdType(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Endpoint Hit: Search by Nation ID type")
+
+	idType := r.URL.Query().Get("idType")
+	idValue := r.URL.Query().Get("idVal")
+
+	if len(idType) != 0 && len(idValue) != 0 {
+		var patientDAO = data.NewPatientDAO()
+		patient := patientDAO.GetByIdType(idType, idValue)
+		fmt.Println(patient)
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(patient)
+	} else {
+		http.NotFound(w, r)
+	}
 }
