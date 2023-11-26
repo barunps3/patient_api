@@ -12,7 +12,7 @@ import (
 
 func GetPatientByUUID(w http.ResponseWriter, r *http.Request) {
 	queryParams := mux.Vars(r)
-	reqPatientId := queryParams["Id"]
+	reqPatientId := queryParams["uuid"]
 
 	var patientDAO = data.NewPatientDAO()
 	patient := patientDAO.GetByUUID(reqPatientId)

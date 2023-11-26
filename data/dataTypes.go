@@ -1,7 +1,11 @@
 package data
 
+import (
+	"time"
+)
+
 type Patient struct {
-	Id                string
+	UUID              string
 	FirstName         string
 	LastName          string
 	Gender            string
@@ -10,9 +14,20 @@ type Patient struct {
 	PhoneNum          string
 	EmergencyPhoneNum string
 	Address           string
+	CurrentDept       string
+	CurrentCare       string
 }
 
-// type Identity struct {
+type ReceptionistEdit struct {
+	Timestamp    time.Time
+	Type         string
+	EditorId     string
+	PatientUUID  string
+	AssignedDept string
+	AssignedCare string
+	Comments     string
+}
+
 // 	Id                   string `bson:"Id"`
 // 	FirstName            string `bson:"FirstName"`
 // 	MiddleName           string `bson:"MiddleName"`

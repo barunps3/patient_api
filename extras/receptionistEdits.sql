@@ -1,5 +1,5 @@
 create table receptionistEdits (
-	editDatetime DATE PRIMARY KEY,
+	editDatetime TIMESTAMP PRIMARY KEY,
 	editType VARCHAR(6),
 	editorId VARCHAR(18),
 	patientUUID VARCHAR(36),

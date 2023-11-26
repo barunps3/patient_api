@@ -109,7 +109,7 @@ func main() {
 	myRouter.Use(standardHeadersMiddleware)
 
 	myRouter.HandleFunc("/", homePage)
-	myRouter.HandleFunc("/patient", api.GetPatientByIdType).Methods("GET")
 	myRouter.HandleFunc("/patient/{uuid}", api.GetPatientByUUID).Methods("GET")
+	myRouter.HandleFunc("/patient", api.GetPatientByIdType).Methods("GET")
 	log.Fatal(http.ListenAndServe(":8080", myRouter))
 }
