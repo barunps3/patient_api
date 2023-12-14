@@ -3,6 +3,7 @@ package data
 import (
 	"database/sql"
 	"fmt"
+	"time"
 )
 
 type XrayDAO struct {
@@ -29,17 +30,19 @@ func (dao *XrayDAO) GetByPatientUUID(uuid string) []Xray {
 	fmt.Println("row:", rows)
 
 	var xrays []Xray
+	var uploadDate time.Time
 	for rows.Next() {
 		var xray Xray
 		if err := rows.Scan(
 			&xray.Id,
-			&xray.UploadDate,
+			&uploadDate,
 			&xray.UploadedBy,
 			&xray.PatientUUID,
 			&xray.BlobLocation,
 		); err != nil {
 			fmt.Sprintf("err: %v", err)
 		}
+		xray.UploadDate = uploadDate.Format("2006-01-02")
 		xrays = append(xrays, xray)
 	}
 	return xrays
