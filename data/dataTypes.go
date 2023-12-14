@@ -28,6 +28,14 @@ type ReceptionistEdit struct {
 	Comments     string
 }
 
+type Xray struct {
+	Id           string
+	UploadDate   string
+	UploadedBy   string
+	PatientUUID  string
+	BlobLocation string
+}
+
 // 	Id                   string `bson:"Id"`
 // 	FirstName            string `bson:"FirstName"`
 // 	MiddleName           string `bson:"MiddleName"`

@@ -6,14 +6,14 @@ import (
 	"time"
 )
 
+type PatientDAO struct {
+	db *sql.DB
+}
+
 type IPatientDAO interface {
 	GetAll() ([]Patient, error)
 	GetByUUID(id string) (Patient, error)
 	Add(patient Patient) error
-}
-
-type PatientDAO struct {
-	db *sql.DB
 }
 
 var patientColumns = `SELECT 
@@ -40,6 +40,7 @@ var receptionistEditsColumns = `SELECT
 
 func (dao *PatientDAO) GetAll() ([]Patient, error) {
 	rows, err := dao.db.Query(patientColumns)
+	defer dao.db.Close()
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -60,7 +61,7 @@ func (dao *PatientDAO) GetAll() ([]Patient, error) {
 			&patient.EmergencyPhoneNum,
 			&patient.Address,
 		); err != nil {
-			fmt.Errorf("err: %v", err)
+			return nil, fmt.Errorf("err: %v", err)
 		}
 		patient.DateOfBirth = timeOfBirth.Format("2006-01-02")
 		patients = append(patients, patient)
