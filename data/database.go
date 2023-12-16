@@ -29,3 +29,9 @@ func NewXraysDAO() *XrayDAO {
 	db := createSqlClient()
 	return &XrayDAO{db: db}
 }
+
+// Report DAO factory
+func NewReportsDAO() *ReportsDAO {
+	db := createSqlClient()
+	return &ReportsDAO{db: db}
+}

@@ -39,5 +39,6 @@ func main() {
 	myRouter.HandleFunc("/patient/{uuid}", api.GetPatientByUUID).Methods("GET")
 	myRouter.HandleFunc("/patient", api.GetPatientByIdType).Methods("GET")
 	myRouter.HandleFunc("/xrays/{uuid}", api.GetXrays).Methods("GET")
+	myRouter.HandleFunc("/reports/{uuid}", api.GetReports).Methods("GET")
 	log.Fatal(http.ListenAndServe(":8080", myRouter))
 }

@@ -44,7 +44,6 @@ func (dao *PatientDAO) GetAll() ([]Patient, error) {
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println("row:", rows)
 
 	var patients []Patient
 	for rows.Next() {
@@ -63,7 +62,7 @@ func (dao *PatientDAO) GetAll() ([]Patient, error) {
 		); err != nil {
 			return nil, fmt.Errorf("err: %v", err)
 		}
-		patient.DateOfBirth = timeOfBirth.Format("2006-01-02")
+		patient.DateOfBirth = timeOfBirth.Format(YYYY_MM_DD)
 		patients = append(patients, patient)
 	}
 	return patients, nil
@@ -106,7 +105,7 @@ func (dao *PatientDAO) GetByUUID(id string) Patient {
 
 	patient.CurrentCare = receptionistEdit.AssignedCare
 	patient.CurrentDept = receptionistEdit.AssignedDept
-	patient.DateOfBirth = timeOfBirth.Format("2006-01-02")
+	patient.DateOfBirth = timeOfBirth.Format(YYYY_MM_DD)
 	return patient
 }
 

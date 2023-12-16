@@ -27,7 +27,6 @@ func (dao *XrayDAO) GetByPatientUUID(uuid string) []Xray {
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println("row:", rows)
 
 	var xrays []Xray
 	var uploadDate time.Time
@@ -42,7 +41,7 @@ func (dao *XrayDAO) GetByPatientUUID(uuid string) []Xray {
 		); err != nil {
 			fmt.Sprintf("err: %v", err)
 		}
-		xray.UploadDate = uploadDate.Format("2006-01-02")
+		xray.UploadDate = uploadDate.Format(YYYY_MM_DD)
 		xrays = append(xrays, xray)
 	}
 	return xrays

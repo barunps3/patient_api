@@ -37,6 +37,17 @@ func GetPatientByIdType(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func GetReports(w http.ResponseWriter, r *http.Request) {
+	queryParams := mux.Vars(r)
+	patientId := queryParams["uuid"]
+
+	reportsDAO := data.NewReportsDAO()
+	reports := reportsDAO.GetByPatientUUID(patientId)
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(reports)
+}
+
 func GetXrays(w http.ResponseWriter, r *http.Request) {
 	queryParams := mux.Vars(r)
 	reqPatientId := queryParams["uuid"]
