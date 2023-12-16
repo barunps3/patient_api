@@ -29,11 +29,11 @@ type ReceptionistEdit struct {
 }
 
 type Xray struct {
-	Id           string
-	UploadDate   string
-	UploadedBy   string
-	PatientUUID  string
-	BlobLocation string
+	Id          string
+	UploadDate  string
+	UploadedBy  string
+	PatientUUID string
+	BlobUrl     string
 }
 
 type Reports struct {

@@ -37,7 +37,7 @@ func (dao *XrayDAO) GetByPatientUUID(uuid string) []Xray {
 			&uploadDate,
 			&xray.UploadedBy,
 			&xray.PatientUUID,
-			&xray.BlobLocation,
+			&xray.BlobUrl,
 		); err != nil {
 			fmt.Sprintf("err: %v", err)
 		}
