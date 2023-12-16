@@ -51,9 +51,23 @@ func GetReports(w http.ResponseWriter, r *http.Request) {
 func GetXrays(w http.ResponseWriter, r *http.Request) {
 	queryParams := mux.Vars(r)
 	reqPatientId := queryParams["uuid"]
+	reqUploadDate := r.URL.Query().Get("uploadDate")
 
 	var xraysDao = data.NewXraysDAO()
 	xrays := xraysDao.GetByPatientUUID(reqPatientId)
+
+	var filteredXrays []data.Xray
+	if reqUploadDate != "" {
+		for _, xray := range xrays {
+			if xray.UploadDate == reqUploadDate {
+				filteredXrays = append(filteredXrays, xray)
+			}
+		}
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(filteredXrays)
+		return
+	}
+
 	fmt.Println(xrays)
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(xrays)
