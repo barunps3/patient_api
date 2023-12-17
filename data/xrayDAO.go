@@ -19,7 +19,7 @@ var xrayColumns = `SELECT
 	uploadDate,
 	uploadedBy,
 	patientUUID,
-	cloudLocation
+	blobObjectKey
 	FROM patientXrays`
 
 func (dao *XrayDAO) GetByPatientUUID(uuid string) []Xray {
@@ -32,15 +32,17 @@ func (dao *XrayDAO) GetByPatientUUID(uuid string) []Xray {
 	var uploadDate time.Time
 	for rows.Next() {
 		var xray Xray
+		var blobObjectKey string
 		if err := rows.Scan(
 			&xray.Id,
 			&uploadDate,
 			&xray.UploadedBy,
 			&xray.PatientUUID,
-			&xray.BlobUrl,
+			&blobObjectKey,
 		); err != nil {
 			fmt.Sprintf("err: %v", err)
 		}
+		xray.BlobUrl = generateS3Url(blobObjectKey)
 		xray.UploadDate = uploadDate.Format(YYYY_MM_DD)
 		xrays = append(xrays, xray)
 	}
