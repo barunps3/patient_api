@@ -23,6 +23,7 @@ func (dao *ReportsDAO) GetByPatientUUID(uuid string) Reports {
 	if err != nil {
 		fmt.Println(err)
 	}
+	defer dao.db.Close()
 
 	var reports Reports
 	reports.PatientUUID = uuid
