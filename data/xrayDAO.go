@@ -27,6 +27,7 @@ func (dao *XrayDAO) GetByPatientUUID(uuid string) []Xray {
 	if err != nil {
 		fmt.Println(err)
 	}
+	defer dao.db.Close()
 
 	var xrays []Xray
 	var uploadDate time.Time
