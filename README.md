@@ -1,3 +1,6 @@
+# Intro
+It is backend API for ehr_webapp written in Go.
+
 # Get started
 ## Setup postgres sql database
 - Install postgresql in your local computer without using docker 
@@ -32,5 +35,4 @@ Postman is used to test different API endpoint.
 
 Since, the data is only present local. Postman App needs to be installed locally. 
 
-Below is the api documentation: 
-https://winter-resonance-708968.postman.co/workspace/Baum-Team-Space~9b9975ce-b871-450a-886a-39856df32780/collection/24423207-b2292700-66a5-41a5-a184-5256203baab3?action=share&creator=24423207
+ View: [API Documentation](https://winter-resonance-708968.postman.co/workspace/Baum-Team-Space~9b9975ce-b871-450a-886a-39856df32780/collection/24423207-b2292700-66a5-41a5-a184-5256203baab3?action=share&creator=24423207)
