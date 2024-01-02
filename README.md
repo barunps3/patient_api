@@ -16,7 +16,7 @@ CREATE DATABASE patients;
 \c patients;
 # Fill database with data by running each of the sql files in extras/
 # Below is only an example
-\i /user/home/patient_api/extras/patientIDs.sql
+\i /user/home/patient_api/extras/patientIDs.sql;
 ```
 - Update the postgres connection string in data/database.go file
 
