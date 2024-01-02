@@ -11,12 +11,12 @@ $ psql postgres
 # List the available databases
 postgres-# \l
 # Create database named 'patients'
-CREATE DATABASE patients;
+postgres-# CREATE DATABASE patients;
 # Connect to 'patients' database
-\c patients;
+postgres-# \c patients;
 # Fill database with data by running each of the sql files in extras/
 # Below is only an example
-\i /user/home/patient_api/extras/patientIDs.sql;
+postgres-# \i /user/home/patient_api/extras/patientIDs.sql;
 ```
 - Update the postgres connection string in data/database.go file
 
